@@ -1,0 +1,54 @@
+body {
+  background-color: #121212;
+  color: #eeeeee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+p.summary {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  font-style: italic;
+  color: #bbbbbb;
+}
+
+.social-links a {
+  color: #eeeeee;
+  font-size: 2.5rem;
+  margin: 0 15px;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #1da1f2; /* Azul estilizado para hover */
+}
+
+/* Estilo minimalista abstrato */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at center, #444, transparent 70%);
+  opacity: 0.3;
+  transform: rotate(-15deg);
+  z-index: -1;
+  border-radius: 50%;
+}
