@@ -15,12 +15,21 @@
 <body>
   <!-- Language Switcher -->
   <div class="language-switcher">
-    <button class="lang-btn" data-lang="en" aria-label="English">
-      <span class="flag">EN</span>
+    <button class="lang-dropdown-btn" id="langDropdownBtn" aria-label="Language Selector">
+      <i class="bi bi-globe"></i>
+      <span id="currentLang">PT</span>
+      <i class="bi bi-chevron-down"></i>
     </button>
-    <button class="lang-btn" data-lang="pt" aria-label="Português">
-      <span class="flag">PT</span>
-    </button>
+    <div class="lang-dropdown-menu" id="langDropdownMenu">
+      <button class="lang-option" data-lang="pt">
+        <span class="flag">🇵🇹</span>
+        <span>Português</span>
+      </button>
+      <button class="lang-option" data-lang="en">
+        <span class="flag">🇺🇸</span>
+        <span>English</span>
+      </button>
+    </div>
   </div>
 
   <h1>Diogo Campos</h1>
@@ -50,7 +59,10 @@ Tenho uma forte motivação para aprender continuamente e aplicar conhecimentos 
   
   <!-- Language Switcher Script -->
   <script>
-    const langButtons = document.querySelectorAll('.lang-btn');
+    const dropdownBtn = document.getElementById('langDropdownBtn');
+    const dropdownMenu = document.getElementById('langDropdownMenu');
+    const langOptions = document.querySelectorAll('.lang-option');
+    const currentLangDisplay = document.getElementById('currentLang');
     const summary = document.querySelector('.summary');
     const htmlTag = document.querySelector('html');
 
@@ -58,23 +70,40 @@ Tenho uma forte motivação para aprender continuamente e aplicar conhecimentos 
     const savedLang = localStorage.getItem('language') || 'pt';
     setLanguage(savedLang);
 
-    langButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
+    // Toggle dropdown
+    dropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      dropdownMenu.classList.remove('show');
+    });
+
+    // Language selection
+    langOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = option.getAttribute('data-lang');
         setLanguage(lang);
         localStorage.setItem('language', lang);
+        dropdownMenu.classList.remove('show');
       });
     });
 
     function setLanguage(lang) {
       htmlTag.setAttribute('lang', lang);
       
-      // Update active button
-      langButtons.forEach(btn => {
-        if (btn.getAttribute('data-lang') === lang) {
-          btn.classList.add('active');
+      // Update current language display
+      currentLangDisplay.textContent = lang.toUpperCase();
+      
+      // Update active option
+      langOptions.forEach(option => {
+        if (option.getAttribute('data-lang') === lang) {
+          option.classList.add('active');
         } else {
-          btn.classList.remove('active');
+          option.classList.remove('active');
         }
       });
 

@@ -58,33 +58,112 @@ body::before {
   position: fixed;
   top: 20px;
   right: 20px;
-  display: flex;
-  gap: 8px;
   z-index: 1000;
 }
 
-.lang-btn {
+.lang-dropdown-btn {
   background: rgba(255, 255, 255, 0.1);
-  border: 2px solid transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 16px;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-.lang-btn:hover {
+.lang-dropdown-btn:hover {
   background: rgba(255, 255, 255, 0.15);
-  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 
-.lang-btn.active {
-  border-color: #1da1f2;
+.lang-dropdown-btn i {
+  font-size: 1rem;
+}
+
+.lang-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(18, 18, 18, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.lang-dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.lang-option {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.lang-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-option.active {
   background: rgba(29, 161, 242, 0.2);
+  color: #1da1f2;
 }
 
-.lang-btn .flag {
-  font-size: 1.5rem;
-  display: block;
+.lang-option .flag {
+  font-size: 1.3rem;
   line-height: 1;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px;
+  }
+  
+  .language-switcher {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .lang-dropdown-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .lang-dropdown-menu {
+    min-width: 140px;
+  }
+  
+  .lang-option {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  h1 {
+    font-size: 2.2rem;
+  }
 }
