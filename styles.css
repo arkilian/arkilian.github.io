@@ -56,13 +56,9 @@ body::before {
 /* Language Switcher */
 .navbar-custom {
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
+  top: 20px;
+  right: 20px;
   z-index: 1000;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: flex-end;
 }
 
 .nav-container {
@@ -237,7 +233,8 @@ body::before {
   }
   
   .navbar-custom {
-    padding: 10px 15px;
+    top: 10px;
+    right: 10px;
   }
 
   .nav-container {
