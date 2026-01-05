@@ -54,10 +54,102 @@ body::before {
 }
 
 /* Language Switcher */
-.language-switcher {
+.navbar-custom {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Projects Dropdown */
+.projects-dropdown {
+  position: relative;
+}
+
+.projects-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.projects-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.projects-btn i {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.projects-btn[aria-expanded="true"] i {
+  transform: rotate(180deg);
+}
+
+.projects-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: rgba(18, 18, 18, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  min-width: 150px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.projects-dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.projects-dropdown-menu .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  color: #eeeeee;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.projects-dropdown-menu .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #1da1f2;
+}
+
+.language-switcher {
+  position: relative;
   z-index: 1000;
 }
 
@@ -144,20 +236,26 @@ body::before {
     padding-top: 70px;
   }
   
-  .language-switcher {
-    top: 10px;
-    right: 10px;
+  .navbar-custom {
+    padding: 10px 15px;
+  }
+
+  .nav-container {
+    gap: 10px;
   }
   
+  .projects-btn,
   .lang-dropdown-btn {
     padding: 8px 12px;
     font-size: 0.85rem;
   }
   
+  .projects-dropdown-menu,
   .lang-dropdown-menu {
     min-width: 140px;
   }
   
+  .projects-dropdown-menu .dropdown-item,
   .lang-option {
     padding: 10px 12px;
     font-size: 0.9rem;
