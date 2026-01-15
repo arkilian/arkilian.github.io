@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparação de Plataformas de P2P Lending</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3e%3cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/%3e%3cpath fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37c.711-1.28 2.66-2.623 5.468-2.623 2.807 0 4.757 1.343 5.468 2.623A7 7 0 0 0 8 1z'/%3e%3c/svg%3e" type="image/svg+xml" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../ArkilianAlgoTrade/assets/styles.css">
+  <style>
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    
+    .comparison-table thead {
+      background: rgba(93, 242, 255, 0.08);
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .comparison-table th {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .comparison-table tbody tr:hover {
+      background: rgba(93, 242, 255, 0.05);
+    }
+    
+    .comparison-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .platform-section {
+      margin: 32px 0;
+    }
+    
+    .platform-section h3 {
+      color: var(--primary);
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    
+    .platform-section .platform-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    
+    .platform-section .platform-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+    }
+    
+    .platform-section .platform-link:hover {
+      text-decoration: underline;
+    }
+    
+    .pros-cons {
+      display: grid;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    
+    .pros-cons h4 {
+      font-size: 16px;
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .pros-cons.pros h4 { color: #5df2ff; }
+    .pros-cons.cons h4 { color: #ff6b6b; }
+    .pros-cons.risks h4 { color: #ffd93d; }
+    .pros-cons.returns h4 { color: #6bcf7f; }
+    
+    .info-box {
+      background: rgba(255, 217, 61, 0.1);
+      border: 1px solid rgba(255, 217, 61, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+    
+    .info-box h3 {
+      color: #ffd93d;
+      margin-top: 0;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .conclusion-box {
+      background: rgba(93, 242, 255, 0.08);
+      border: 1px solid rgba(93, 242, 255, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 32px 0;
+    }
+    
+    .conclusion-box h3 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: 20px;
+    }
+    
+    .highlight-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+  </style>
+</head>
+<body class="grid-bg">
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="tagline"><span class="pill"></span><span>P2P Lending</span></div>
+        <h1>Comparação de Plataformas de P2P Lending</h1>
+        <p class="subtitle">GoParity vs Raize vs Bondora vs ViaInvest</p>
+        <a class="cta" href="../index.html">
+          <i class="bi bi-arrow-left"></i>
+          <span>Voltar ao Blog</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="article-content">
+      <div class="card">
+        <h2>📋 O que é P2P Lending?</h2>
+        <p>O P2P Lending (Peer-to-Peer) é um modelo de investimento onde os investidores emprestam capital diretamente a projetos, empresas ou particulares através de plataformas que fazem a intermediação, análise de risco e cobrança.</p>
+        <p style="margin-top:12px;">Apesar de algumas plataformas serem reguladas, P2P Lending não é um depósito bancário e não existe garantia estatal do capital investido. O retorno está sempre associado a risco de crédito.</p>
+        <p style="margin-top:12px;">Esta página compara quatro plataformas conhecidas, duas portuguesas e duas internacionais, com base em características públicas e experiência prática de utilização ao longo de vários anos.</p>
+      </div>
+
+      <div class="card">
+        <h2>🔍 Visão Geral</h2>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Plataforma</th>
+              <th>País</th>
+              <th>Tipo de Empréstimo</th>
+              <th>Liquidez</th>
+              <th>Risco Relativo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>GoParity</strong></td>
+              <td>Portugal 🇵🇹</td>
+              <td>Projetos sustentáveis</td>
+              <td>Baixa</td>
+              <td>Baixo / Médio</td>
+            </tr>
+            <tr>
+              <td><strong>Raize</strong></td>
+              <td>Portugal 🇵🇹</td>
+              <td>PME's</td>
+              <td>Média</td>
+              <td>Médio</td>
+            </tr>
+            <tr>
+              <td><strong>Bondora (Go & Grow)</strong></td>
+              <td>Estónia 🇪🇪</td>
+              <td>Crédito pessoal (automatizado)</td>
+              <td>Alta</td>
+              <td>Médio</td>
+            </tr>
+            <tr>
+              <td><strong>ViaInvest</strong></td>
+              <td>Letónia 🇱🇻</td>
+              <td>Crédito pessoal / ABS</td>
+              <td>Média</td>
+              <td>Médio / Alto</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="platform-section">
+        <div class="card">
+          <h3>GoParity</h3>
+          <p class="platform-meta">
+            <strong>Tipo:</strong> Empréstimos a projetos de impacto ambiental e social<br>
+            <strong>Regulação:</strong> Plataforma de crowdfunding regulada pela CMVM<br>
+            <strong>Website:</strong> <a href="https://goparity.com/pt-pt" target="_blank" class="platform-link">https://goparity.com/pt-pt</a>
+          </p>
+
+          <div class="pros-cons pros">
+            <h4>✅ Prós</h4>
+            <ul class="list">
+              <li>Forte foco em impacto sustentável e social</li>
+              <li>Plataforma portuguesa, com enquadramento legal nacional</li>
+              <li>Elevada transparência e documentação detalhada dos projetos</li>
+              <li>Perfil de risco relativamente conservador dentro do P2P</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons cons">
+            <h4>❌ Contras</h4>
+            <ul class="list">
+              <li>Capital geralmente bloqueado até à maturidade</li>
+              <li>Liquidez reduzida (mercado secundário limitado ou inexistente)</li>
+              <li>Retornos mais baixos comparativamente a plataformas internacionais</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons risks">
+            <h4>⚠️ Riscos</h4>
+            <ul class="list">
+              <li>Incumprimento ou atraso dos projetos</li>
+              <li>Risco de iliquidez durante o prazo do empréstimo</li>
+              <li>Não existe garantia estatal do capital</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons returns">
+            <h4>📈 Retornos Esperados</h4>
+            <p>Aproximadamente <strong>4% a 6%</strong> ao ano, dependendo do projeto</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-section">
+        <div class="card">
+          <h3>Raize</h3>
+          <p class="platform-meta">
+            <strong>Tipo:</strong> Empréstimos a pequenas e médias empresas (PME's)<br>
+            <strong>Regulação:</strong> Banco de Portugal e CMVM<br>
+            <strong>Website:</strong> <a href="https://www.raize.pt/" target="_blank" class="platform-link">https://www.raize.pt/</a>
+          </p>
+
+          <div class="pros-cons pros">
+            <h4>✅ Prós</h4>
+            <ul class="list">
+              <li>Apoio direto à economia real portuguesa</li>
+              <li>Plataforma nacional e regulada</li>
+              <li>Análise de risco relativamente rigorosa</li>
+              <li>Possibilidade de mercado secundário (cessão de créditos)</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons cons">
+            <h4>❌ Contras</h4>
+            <ul class="list">
+              <li>Capital normalmente bloqueado durante o contrato</li>
+              <li>Liquidez não garantida no mercado secundário</li>
+              <li>Rentabilidade líquida pode ser afetada por comissões</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons risks">
+            <h4>⚠️ Riscos</h4>
+            <ul class="list">
+              <li>Incumprimento das empresas financiadas</li>
+              <li>Sensibilidade a ciclos económicos</li>
+              <li>Capital não garantido</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons returns">
+            <h4>📈 Retornos Esperados</h4>
+            <p>Tipicamente <strong>5% a 8%</strong> ao ano (bruto)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-section">
+        <div class="card">
+          <h3>Bondora – Go & Grow</h3>
+          <p class="platform-meta">
+            <strong>Tipo:</strong> Crédito pessoal (investimento automatizado)<br>
+            <strong>Regulação:</strong> Licenciada na Estónia (não é banco)<br>
+            <strong>Website:</strong> <a href="https://bondora.com/en/" target="_blank" class="platform-link">https://bondora.com/en/</a>
+          </p>
+
+          <div class="pros-cons pros">
+            <h4>✅ Prós</h4>
+            <ul class="list">
+              <li>Elevada liquidez (levantamentos possíveis a qualquer momento)</li>
+              <li>Juros acumulados diariamente</li>
+              <li>Extremamente simples de usar</li>
+              <li>Boa opção para capital de curto prazo ou reserva investida</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons cons">
+            <h4>❌ Contras</h4>
+            <ul class="list">
+              <li>Menor controlo sobre empréstimos individuais</li>
+              <li>Produto com retorno-alvo, não garantido</li>
+              <li>Plataforma estrangeira</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons risks">
+            <h4>⚠️ Riscos</h4>
+            <ul class="list">
+              <li>Risco agregado de crédito</li>
+              <li>Possibilidade de limitação temporária de levantamentos</li>
+              <li>Não existe garantia de capital nem fundo de depósitos</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons returns">
+            <h4>📈 Retornos Esperados</h4>
+            <p>Retorno-alvo de cerca de <strong>6%</strong> ao ano (não garantido)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="platform-section">
+        <div class="card">
+          <h3>ViaInvest</h3>
+          <p class="platform-meta">
+            <strong>Tipo:</strong> Empréstimos ao consumo / Asset-Backed Securities<br>
+            <strong>Regulação:</strong> Supervisionada pelo Banco Central da Letónia<br>
+            <strong>Website:</strong> <a href="https://viainvest.com/en/" target="_blank" class="platform-link">https://viainvest.com/en/</a>
+          </p>
+
+          <div class="pros-cons pros">
+            <h4>✅ Prós</h4>
+            <ul class="list">
+              <li>Retornos potencialmente mais elevados</li>
+              <li>Prazos relativamente curtos</li>
+              <li>Alguns produtos elegíveis para esquema europeu de compensação ao investidor (até ~20.000€, em condições específicas)</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons cons">
+            <h4>❌ Contras</h4>
+            <ul class="list">
+              <li>Maior risco relativo</li>
+              <li>Plataforma estrangeira</li>
+              <li>Estrutura dos produtos mais complexa</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons risks">
+            <h4>⚠️ Riscos</h4>
+            <ul class="list">
+              <li>Incumprimento dos mutuários</li>
+              <li>Risco económico e regulatório</li>
+              <li>A compensação ao investidor não é garantia de capital nem cobre todos os cenários</li>
+            </ul>
+          </div>
+
+          <div class="pros-cons returns">
+            <h4>📈 Retornos Esperados</h4>
+            <p>Aproximadamente <strong>8% a 13%</strong> ao ano, dependendo do produto</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3>⚠️ Proteção ao Investidor (Nota Importante)</h3>
+        <ul class="list">
+          <li>Nenhuma destas plataformas oferece garantia estatal do capital, como nos depósitos bancários</li>
+          <li>A regulação melhora transparência e supervisão, mas não elimina risco</li>
+          <li>A ViaInvest pode estar abrangida por esquemas de compensação ao investidor em condições específicas, o que não equivale a garantia de capital</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>📊 Comparação Final</h2>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Critério</th>
+              <th>Plataforma Destaque</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Menor risco relativo</td>
+              <td><strong>GoParity</strong></td>
+            </tr>
+            <tr>
+              <td>Economia portuguesa</td>
+              <td><strong>Raize</strong></td>
+            </tr>
+            <tr>
+              <td>Maior liquidez</td>
+              <td><strong>Bondora</strong></td>
+            </tr>
+            <tr>
+              <td>Maior retorno potencial</td>
+              <td><strong>ViaInvest</strong></td>
+            </tr>
+            <tr>
+              <td>Simplicidade</td>
+              <td><strong>Bondora</strong></td>
+            </tr>
+            <tr>
+              <td>Impacto social</td>
+              <td><strong>GoParity</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="conclusion-box">
+        <h3>💡 Conclusão</h3>
+        <p>As plataformas de P2P Lending podem fazer sentido como complemento a uma carteira diversificada, mas não substituem investimentos garantidos.</p>
+        
+        <p style="margin-top:16px;"><strong>Uma abordagem equilibrada pode combinar:</strong></p>
+        <ul class="list" style="margin-top:12px;">
+          <li>Plataformas nacionais e internacionais</li>
+          <li>Diferentes níveis de risco</li>
+          <li>Produtos com e sem liquidez</li>
+        </ul>
+        
+        <div class="highlight-box" style="margin-top:24px;">
+          <p style="margin:0; font-weight:600; color:var(--primary); text-align:center; font-size:16px;">
+            👉 Nunca investir capital que não possa ficar bloqueado ou sofrer perdas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
