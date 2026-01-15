@@ -1,0 +1,233 @@
+.article-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 14px;
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.comparison-table thead {
+  background: rgba(93, 242, 255, 0.08);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.comparison-table th {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.comparison-table tbody tr:hover {
+  background: rgba(93, 242, 255, 0.05);
+}
+
+.comparison-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.platform-section {
+  margin: 32px 0;
+}
+
+.platform-section h3 {
+  color: var(--primary);
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.platform-section .platform-meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.platform-section .platform-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+
+.platform-section .platform-link:hover {
+  text-decoration: underline;
+}
+
+.pros-cons {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.pros-cons h4 {
+  font-size: 16px;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pros-cons.pros h4 { color: #5df2ff; }
+.pros-cons.cons h4 { color: #ff6b6b; }
+.pros-cons.risks h4 { color: #ffd93d; }
+.pros-cons.returns h4 { color: #6bcf7f; }
+
+.info-box {
+  background: rgba(255, 217, 61, 0.1);
+  border: 1px solid rgba(255, 217, 61, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+}
+
+.info-box h3 {
+  color: #ffd93d;
+  margin-top: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.conclusion-box {
+  background: rgba(93, 242, 255, 0.08);
+  border: 1px solid rgba(93, 242, 255, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 32px 0;
+}
+
+.conclusion-box h3 {
+  color: var(--primary);
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.highlight-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .page {
+    padding: 32px 16px 64px;
+  }
+  
+  header {
+    gap: 20px;
+  }
+  
+  h1 {
+    font-size: 28px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+  }
+  
+  .cta {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .card {
+    padding: 18px 16px;
+  }
+  
+  .card h2 {
+    font-size: 16px;
+  }
+  
+  .card p {
+    font-size: 14px;
+  }
+  
+  /* Make table scrollable on mobile */
+  .comparison-table {
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 12px 8px;
+  }
+  
+  .platform-section h3 {
+    font-size: 20px;
+  }
+  
+  .platform-section .platform-meta {
+    font-size: 13px;
+  }
+  
+  .pros-cons h4 {
+    font-size: 14px;
+  }
+  
+  .list {
+    font-size: 13px;
+  }
+  
+  .info-box,
+  .conclusion-box,
+  .highlight-box {
+    padding: 16px;
+  }
+  
+  .info-box h3,
+  .conclusion-box h3 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 24px 12px 48px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  .tagline {
+    font-size: 10px;
+    padding: 8px 12px;
+  }
+  
+  .pill {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .comparison-table {
+    font-size: 11px;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 10px 6px;
+  }
+  
+  .card {
+    padding: 16px 14px;
+  }
+}
