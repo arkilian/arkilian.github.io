@@ -1,3 +1,31 @@
+/* Support section */
+.support-card {
+  margin: 32px 0 0;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(93, 242, 255, 0.08), rgba(0, 0, 0, 0.25));
+  box-shadow: 0 0 24px rgba(93, 242, 255, 0.2), inset 0 0 1px rgba(93, 242, 255, 0.1);
+  border-radius: 12px;
+}
+
+.support-card h3 {
+  margin-top: 0;
+  font-size: 20px;
+  color: var(--primary);
+}
+
+.support-card p {
+  color: var(--muted);
+  margin: 10px 0 0;
+}
+
+.stripe-button-wrap {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .page {
@@ -31,6 +59,10 @@
   
   .card p {
     font-size: 14px;
+  }
+
+  .support-card h3 {
+    font-size: 18px;
   }
 }
 
