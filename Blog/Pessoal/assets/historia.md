@@ -58,6 +58,7 @@ Não acredito em esquemas rápidos de enriquecimento. Acredito em estratégia, d
 - 🧮 **Responsabilidade financeira** — gerir risco é essencial.
 - 🤝 **Comunidade** — vamos mais longe juntos.
 - 💡 **Serviço** — conhecimento só faz sentido quando é partilhado.
+- 🚀 **Inovação com propósito** — tecnologia ao serviço de melhores decisões financeiras
 
 ***
 
