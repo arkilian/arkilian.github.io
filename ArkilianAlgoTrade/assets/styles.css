@@ -104,6 +104,13 @@ h1 {
 
 .pill { width: 8px; height: 8px; border-radius: 999px; background: var(--primary); box-shadow: 0 0 12px var(--primary); }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
 .grid { display: grid; gap: 16px; margin-top: 32px; }
 @media (min-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
@@ -149,8 +156,7 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 18px;
-  margin-top: 28px;
+  padding: 12px 16px;
   border-radius: 12px;
   border: 1px solid rgba(93, 242, 255, 0.6);
   background: linear-gradient(120deg, rgba(93, 242, 255, 0.12), rgba(182, 123, 255, 0.12));
@@ -159,10 +165,28 @@ h1 {
   font-weight: 600;
   letter-spacing: 0.01em;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), 0 0 20px var(--glow);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
-.cta span { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--primary); }
-.cta:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(93, 242, 255, 0.25); }
+.cta .cta-arrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--primary);
+}
+
+.cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(93, 242, 255, 0.25);
+}
+
+.cta.secondary {
+  border-color: rgba(182, 123, 255, 0.5);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.cta.secondary .cta-arrow {
+  color: var(--accent);
+}
 
 .mono { font-family: 'JetBrains Mono', monospace; color: var(--muted); font-size: 13px; letter-spacing: 0.02em; }
