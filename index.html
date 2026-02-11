@@ -1,160 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3e%3cpath d='M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'/%3e%3cpath fill-rule='evenodd' d='M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37c.711-1.28 2.66-2.623 5.468-2.623 2.807 0 4.757 1.343 5.468 2.623A7 7 0 0 0 8 1z'/%3e%3c/svg%3e" type="image/svg+xml" />
   <title>Diogo Campos</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
   <!-- Custom CSS -->
-  <link href="./styles.css" rel="stylesheet" />
+  <link href="./assets/styles.css" rel="stylesheet" />
 </head>
-<body>
-  <!-- Navigation -->
-  <nav class="navbar-custom">
-    <div class="nav-container">
-      <!-- Projects Dropdown -->
-      <div class="projects-dropdown">
-        <button class="projects-btn" id="projectsDropdownBtn" aria-label="Projetos" aria-expanded="false">
-          <span data-pt="Projetos" data-en="Projects">Projetos</span>
-          <i class="bi bi-chevron-down"></i>
-        </button>
-        <div class="projects-dropdown-menu" id="projectsDropdownMenu">
-          <a href="./ArkilianAlgoTrade/index.html" class="dropdown-item" data-pt="Backtest" data-en="Backtest">ArkilianAlgoTrade</a>
-          <a href="./Blog/index.html" class="dropdown-item" data-pt="Blog" data-en="Blog">Blog</a>
+<body class="grid-bg">
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="tagline">
+          <span class="pill"></span>
+          <span>Tecnologia, Dados &amp; Investimentos</span>
+        </div>
+        <h1>Diogo Campos</h1>
+        <p class="subtitle summary">
+          Profissional com 4 anos de experiência em desenvolvimento e administração de bases de dados Oracle PLSQL, com forte domínio em ambientes Linux, Python e virtualização. Demonstro uma elevada capacidade técnica e pensamento analítico aplicado à resolução de problemas complexos e otimização de processos tecnológicos.
+          <br><br>
+          Sou investidor privado desde 2015, com foco especial nas criptomoedas desde 2020, motivado pelo interesse na tecnologia subjacente e na sua conexão com a informática. Esta experiência complementa a minha visão estratégica e capacidade de análise, reforçando a minha abordagem metódica e inovadora no trabalho diário.
+          <br><br>
+          Tenho uma forte motivação para aprender continuamente e aplicar conhecimentos técnicos avançados em diversos projetos, destacando-me pela dedicação, rigor e orientação para resultados.
+        </p>
+        <div class="actions">
+          <a class="cta" href="./Blog/index.html">
+            <i class="bi bi-journal-text"></i>
+            <span class="cta-label">Explorar o Blog</span>
+          </a>
+          <a class="cta secondary" href="./ArkilianAlgoTrade/index.html">
+            <i class="bi bi-graph-up-arrow"></i>
+            <span class="cta-label">Ver ArkilianAlgoTrade</span>
+          </a>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/arkilian" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="https://www.linkedin.com/in/diogo91campos" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
+      <div class="portrait-card">
+        <img src="./assets/images/caricatura.png" alt="Caricatura de Diogo Campos" />
+      </div>
+    </header>
 
-      <!-- Language Switcher -->
-      <div class="language-switcher">
-        <button class="lang-dropdown-btn" id="langDropdownBtn" aria-label="Language Selector">
-          <i class="bi bi-globe"></i>
-          <span id="currentLang">PT</span>
-          <i class="bi bi-chevron-down"></i>
-        </button>
-        <div class="lang-dropdown-menu" id="langDropdownMenu">
-      <button class="lang-option" data-lang="pt">
-        <span class="flag">🇵🇹</span>
-        <span>Português</span>
-      </button>
-      <button class="lang-option" data-lang="en">
-        <span class="flag">🇺🇸</span>
-        <span>English</span>
-      </button>
-    </div>
-  </nav>
-
-  <h1>Diogo Campos</h1>
-  <p class="summary" 
-  
-  data-en="Professional with 4 years of experience in Oracle PL/SQL database development and administration, with strong expertise in Linux environments, Python, and virtualization. I demonstrate a high technical capacity and analytical thinking applied to solving complex problems and optimizing technological processes.
-
-I have been a private investor since 2015, with a special focus on cryptocurrencies since 2020, driven by interest in the underlying technology and its connection to computer science. This experience complements my strategic vision and analytical capacity, reinforcing my methodical and innovative approach in daily work.
-
-I have a strong motivation to continuously learn and apply advanced technical knowledge in various projects, standing out for my dedication, rigor, and results orientation." 
-
-
-data-pt="Profissional com 4 anos de experiência em desenvolvimento e administração de bases de dados Oracle PLSQL, com forte domínio em ambientes Linux, Python e virtualização. Demonstro uma elevada capacidade técnica e pensamento analítico aplicado à resolução de problemas complexos e otimização de processos tecnológicos.
-
-Sou investidor privado desde 2015, com foco especial nas criptomoedas desde 2020, motivado pelo interesse na tecnologia subjacente e na sua conexão com a informática. Esta experiência complementa a minha visão estratégica e capacidade de análise, reforçando a minha abordagem metódica e inovadora no trabalho diário.
-
-Tenho uma forte motivação para aprender continuamente e aplicar conhecimentos técnicos avançados em diversos projetos, destacando-me pela dedicação, rigor e orientação para resultados.">
-
-  </p>
-  <div class="social-links">
-    <a href="https://github.com/arkilian" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
-    <a href="https://www.linkedin.com/in/diogo91campos" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+    <section class="grid">
+      <article class="card">
+        <h2>Projetos em destaque</h2>
+        <p>Estratégias quantitativas, backtests e análises aplicadas ao mercado.</p>
+        <a class="cta" href="./ArkilianAlgoTrade/index.html" style="margin-top: 16px;">
+          <span class="cta-label">Abrir ArkilianAlgoTrade</span>
+          <span class="cta-arrow">&rarr;</span>
+        </a>
+      </article>
+      <article class="card">
+        <h2>Artigos &amp; comparações</h2>
+        <p>Conteúdo sobre investimentos, plataformas financeiras e gestão de capital.</p>
+        <a class="cta" href="./Blog/index.html" style="margin-top: 16px;">
+          <span class="cta-label">Abrir Blog</span>
+          <span class="cta-arrow">&rarr;</span>
+        </a>
+      </article>
+    </section>
   </div>
 
-  <!-- Bootstrap JS Bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
-  <!-- Projects Dropdown Script -->
-  <script>
-    const projectsBtn = document.getElementById('projectsDropdownBtn');
-    const projectsDropdownMenu = document.getElementById('projectsDropdownMenu');
-
-    // Toggle projects dropdown
-    projectsBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      projectsDropdownMenu.classList.toggle('show');
-      projectsBtn.setAttribute('aria-expanded', projectsDropdownMenu.classList.contains('show'));
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', () => {
-      projectsDropdownMenu.classList.remove('show');
-      projectsBtn.setAttribute('aria-expanded', 'false');
-    });
-
-    // Close dropdown when clicking on a link
-    projectsDropdownMenu.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', () => {
-        projectsDropdownMenu.classList.remove('show');
-        projectsBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-  </script>
-  
-  <!-- Language Switcher Script -->
-  <script>
-    const dropdownBtn = document.getElementById('langDropdownBtn');
-    const dropdownMenu = document.getElementById('langDropdownMenu');
-    const langOptions = document.querySelectorAll('.lang-option');
-    const currentLangDisplay = document.getElementById('currentLang');
-    const summary = document.querySelector('.summary');
-    const htmlTag = document.querySelector('html');
-
-    // Load saved language or default to Portuguese
-    const savedLang = localStorage.getItem('language') || 'pt';
-    setLanguage(savedLang);
-
-    // Toggle dropdown
-    dropdownBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', () => {
-      dropdownMenu.classList.remove('show');
-    });
-
-    // Language selection
-    langOptions.forEach(option => {
-      option.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const lang = option.getAttribute('data-lang');
-        setLanguage(lang);
-        localStorage.setItem('language', lang);
-        dropdownMenu.classList.remove('show');
-      });
-    });
-
-    function setLanguage(lang) {
-      htmlTag.setAttribute('lang', lang);
-      
-      // Update current language display
-      currentLangDisplay.textContent = lang.toUpperCase();
-      
-      // Update active option
-      langOptions.forEach(option => {
-        if (option.getAttribute('data-lang') === lang) {
-          option.classList.add('active');
-        } else {
-          option.classList.remove('active');
-        }
-      });
-
-      // Update content
-      const text = summary.getAttribute(`data-${lang}`);
-      if (text) {
-        summary.textContent = text;
-      }
-    }
-  </script>
 </body>
 </html>
