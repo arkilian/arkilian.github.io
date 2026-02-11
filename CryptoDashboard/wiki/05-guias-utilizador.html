@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>👤 Guias de Utilizador - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>👤 Guias de Utilizador</h1>
+
+      <h2>Visão Geral</h2>
+      <p>Este guia apresenta workflows práticos passo-a-passo para utilizadores e administradores do Crypto Dashboard.</p>
+
+      <hr>
+
+      <h2>🔐 Para Todos os Utilizadores</h2>
+
+      <h3>Primeiro Acesso</h3>
+      
+      <p><strong>1. Receber Credenciais</strong></p>
+      <p>O administrador criará sua conta e fornecerá:</p>
+      <ul>
+        <li>Username</li>
+        <li>Password inicial</li>
+        <li>Link da aplicação</li>
+      </ul>
+
+      <p><strong>2. Login Inicial</strong></p>
+      <ol>
+        <li>Aceder ao URL da aplicação</li>
+        <li>Inserir username e password</li>
+        <li>Clicar em "Login"</li>
+        <li>Será redirecionado para o dashboard</li>
+      </ol>
+
+      <p><strong>3. Alterar Password (Recomendado)</strong></p>
+      <ol>
+        <li>No menu lateral → "⚙️ Configurações"</li>
+        <li>Secção "Alterar Password"</li>
+        <li>Inserir password atual</li>
+        <li>Inserir nova password (mínimo 6 caracteres)</li>
+        <li>Confirmar nova password</li>
+        <li>Clicar "Atualizar Password"</li>
+      </ol>
+
+      <h3>Dashboard Principal</h3>
+      
+      <p><strong>Visão Geral do que vê:</strong></p>
+      <pre><code>┌─────────────────────────────────────────┐
+│  🏠 Crypto Dashboard                     │
+├─────────────────────────────────────────┤
+│  👤 Bem-vindo, [Seu Username]!          │
+│                                          │
+│  Menu Lateral:                           │
+│  📊 Análise de Portfólio                │
+│  ⚙️ Configurações                        │
+│  🚪 Logout                               │
+└─────────────────────────────────────────┘</code></pre>
+
+      <h3>Ver Seu Portfólio</h3>
+      
+      <p><strong>Passo-a-passo:</strong></p>
+      <ol>
+        <li>Menu lateral → "📊 Análise de Portfólio"</li>
+        <li>Verá automaticamente <strong>seu</strong> portfólio (não dos outros)</li>
+      </ol>
+
+      <p><strong>Informação Mostrada:</strong></p>
+
+      <h4>Métricas de Topo</h4>
+      <pre><code>💰 Saldo Atual (Fundo): €5,234.50
+   └─> Seu valor total no fundo HOJE
+
+📈 Total Depositado: €4,000.00
+   └─> Soma de todos os seus depósitos
+
+📉 Total Levantado: €0.00
+   └─> Soma de todos os seus levantamentos</code></pre>
+
+      <h4>Gráfico de Evolução</h4>
+      <ul>
+        <li><strong>Linha Azul</strong>: Seus depósitos acumulados ao longo do tempo</li>
+        <li><strong>Linha Vermelha</strong>: Seus levantamentos acumulados</li>
+        <li><strong>Linha Verde</strong>: Valor real do seu portfólio (com ganhos/perdas do mercado)</li>
+      </ul>
+
+      <p><strong>Interpretar o Gráfico:</strong></p>
+      <pre><code>Se linha verde > linha azul → Está a ganhar 📈
+Se linha verde < linha azul → Está a perder 📉
+Se linha verde = linha azul → Break-even ➡️</code></pre>
+
+      <h3>Solicitar Depósito</h3>
+      
+      <p><strong>Atenção:</strong> Você não faz o depósito diretamente no sistema. O fluxo é:</p>
+      <ol>
+        <li><strong>Contacta o administrador:</strong> Email, telefone ou presencialmente. Diz quanto quer depositar (ex: €1,000)</li>
+        <li><strong>Transfere o dinheiro:</strong> Transferência bancária, entrega em dinheiro ou transferência cripto</li>
+        <li><strong>Aguarda confirmação:</strong> Admin confirma recebimento e regista no sistema</li>
+        <li><strong>Verifica no dashboard:</strong> Vê novo saldo e ownership %</li>
+      </ol>
+
+      <h3>Solicitar Levantamento</h3>
+      
+      <p><strong>Fluxo similar ao depósito:</strong></p>
+      <ol>
+        <li><strong>Verifica quanto pode levantar:</strong> Vai a "Análise de Portfólio" e vê "Saldo Atual"</li>
+        <li><strong>Contacta administrador:</strong> Informa valor desejado</li>
+        <li><strong>Admin processa:</strong> Transfere o dinheiro e regista no sistema</li>
+        <li><strong>Verifica no dashboard:</strong> Saldo atualizado</li>
+      </ol>
+
+      <hr>
+
+      <h2>👥 Para Administradores</h2>
+
+      <h3>Gestão de Utilizadores</h3>
+
+      <h4>Criar Novo Utilizador</h4>
+      <ol>
+        <li>Menu → "👥 Utilizadores"</li>
+        <li>Secção "➕ Adicionar Novo Utilizador"</li>
+        <li>Preencher formulário:
+          <pre><code>Username: joao_silva
+Email: joao@email.com
+Password: [gerar forte]
+Confirmar Password: [repetir]
+É Admin?: [ ] (deixar desmarcado para utilizador normal)</code></pre>
+        </li>
+        <li>Clicar "Criar Utilizador"</li>
+        <li><strong>Anotar credenciais para enviar ao utilizador</strong></li>
+      </ol>
+
+      <p><strong>Boas Práticas:</strong></p>
+      <ul>
+        <li>✅ Username sem espaços (usar _ ou -)</li>
+        <li>✅ Email válido (para recuperação futura)</li>
+        <li>✅ Password forte: mínimo 8 caracteres, maiúsculas, números</li>
+        <li>✅ Não tornar todos admin (princípio do menor privilégio)</li>
+      </ul>
+
+      <h3>Processar Depósitos</h3>
+      
+      <p><strong>Workflow Completo:</strong></p>
+
+      <h4>1. Receber Fundos (Fora do Sistema)</h4>
+      <p>Utilizador transfere €1,000 via transferência bancária, dinheiro físico ou transferência cripto.</p>
+      
+      <p><strong>Confirmar Recebimento:</strong></p>
+      <ul>
+        <li>Verificar extrato bancário ✅</li>
+        <li>OU confirmar transação blockchain ✅</li>
+        <li>OU contar dinheiro físico ✅</li>
+      </ul>
+
+      <h4>2. Registar no Sistema</h4>
+      <ol>
+        <li>Menu → "👥 Utilizadores"</li>
+        <li>Selecionar utilizador que depositou</li>
+        <li>Secção "💰 Movimentos de Capital"</li>
+        <li>Tab "Depósito"</li>
+        <li>Preencher:
+          <pre><code>💶 Valor (EUR): 1000
+📅 Data: 2025-10-31  [data do recebimento]
+📝 Notas: Transferência bancária ref. 12345</code></pre>
+        </li>
+        <li>Clicar "Registar Depósito"</li>
+      </ol>
+
+      <h3>Executar Transações de Cripto</h3>
+
+      <h4>Comprar Criptomoeda</h4>
+      <p><strong>Cenário:</strong> Fundo tem €5,000 em caixa, quer comprar ADA</p>
+
+      <ol>
+        <li>Menu → "💼 Portfólio"</li>
+        <li>Tab "Comprar"</li>
+        <li>Selecionar ativo: 🪙 Ativo: ADA (Cardano)</li>
+        <li>Inserir quantidade: 📊 Quantidade: 1000</li>
+        <li><strong>Opção A - Usar Preço de Mercado:</strong>
+          <ul>
+            <li>Clicar botão "💹 Usar preço de mercado"</li>
+            <li>Sistema busca preço atual automaticamente</li>
+          </ul>
+        </li>
+        <li>Data da transação: 📅 Data: 2025-10-31</li>
+        <li>Fee (opcional): 💸 Fee (EUR): 0.50</li>
+        <li>Clicar "Confirmar Compra"</li>
+      </ol>
+
+      <h3>Analisar Performance do Fundo</h3>
+
+      <h4>Vista Agregada (Todos os Utilizadores)</h4>
+      <ol>
+        <li>Menu → "📊 Análise de Portfólio"</li>
+        <li>No topo, ver selector: 🔍 Escolhe uma vista: 💰 Todos (Fundo Comunitário)</li>
+        <li>Deixar selecionado "Todos"</li>
+      </ol>
+
+      <p><strong>Métricas Mostradas:</strong></p>
+      <pre><code>💰 Saldo Atual (Fundo): €50,234.50
+   └─> NAV total do fundo
+
+📈 Total Depositado: €45,000.00
+   └─> Soma de depósitos de TODOS
+
+📉 Total Levantado: €3,000.00
+   └─> Soma de levantamentos de TODOS
+
+🎯 Performance implícita:
+   €50,234.50 - €45,000 + €3,000 = €8,234.50 lucro (+18.3%)</code></pre>
+
+      <h2>❓ FAQ Prático</h2>
+
+      <h3>Para Utilizadores</h3>
+      
+      <p><strong>Q: Posso ver quanto os outros têm?</strong><br>
+      A: Não, apenas admins veem todos. Você só vê seu próprio portfólio.</p>
+
+      <p><strong>Q: Posso comprar/vender cripto diretamente?</strong><br>
+      A: Não, apenas admins fazem transações. Você participa do fundo, admin gere.</p>
+
+      <p><strong>Q: O preço que vejo está atualizado?</strong><br>
+      A: Sim! Preços são de hoje (CoinGecko API). Gráfico histórico usa preços de cada data.</p>
+
+      <h3>Para Administradores</h3>
+      
+      <p><strong>Q: E se errar um depósito/levantamento?</strong><br>
+      A: ⚠️ Sistema não tem "delete". Pode fazer movimento inverso. Melhor validar sempre antes.</p>
+
+      <p><strong>Q: Posso ter múltiplos admins?</strong><br>
+      A: Sim! Ao criar/editar utilizador, marcar "É Admin?". Múltiplos admins veem e fazem tudo.</p>
+
+      <div class="wiki-nav-bottom">
+        <a href="04-modelo-negocio.html">← Modelo de Negócio</a>
+        <a href="06-setup-deployment.html">Setup e Deployment →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

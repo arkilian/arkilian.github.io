@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🔷 Integração Blockchain Cardano - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>🔷 Integração Blockchain Cardano</h1>
+
+      <p><strong>Explorador completo da blockchain Cardano integrado ao Crypto Dashboard</strong></p>
+
+      <hr>
+
+      <h2>Visão Geral</h2>
+
+      <h3>O Que É?</h3>
+      <p>A integração Cardano permite consultar informações em tempo real da blockchain Cardano diretamente no dashboard, sem necessidade de usar explorers externos para operações comuns.</p>
+
+      <h3>Principais Recursos</h3>
+      <ul>
+        <li>✅ <strong>Consulta de Saldo</strong>: Balance de ADA e tokens nativos</li>
+        <li>✅ <strong>Staking Info</strong>: Delegação, pool, recompensas</li>
+        <li>✅ <strong>Histórico de Transações</strong>: Completo com análise automática</li>
+        <li>✅ <strong>Metadados Automáticos</strong>: Nomes e decimais de tokens</li>
+        <li>✅ <strong>Multi-Wallet</strong>: Suporte a múltiplas wallets por utilizador</li>
+        <li>✅ <strong>Configuração DB</strong>: APIs e wallets geridas via interface</li>
+      </ul>
+
+      <h3>Por Que Integrar?</h3>
+      
+      <p><strong>Antes:</strong></p>
+      <ul>
+        <li>Abrir CardanoScan em browser</li>
+        <li>Copiar/colar endereços manualmente</li>
+        <li>Consultar múltiplas páginas</li>
+        <li>Sem histórico ou cache</li>
+      </ul>
+
+      <p><strong>Agora:</strong></p>
+      <ul>
+        <li>Tudo no dashboard</li>
+        <li>Wallets salvas e acessíveis</li>
+        <li>Cache de metadados</li>
+        <li>Análise automática de transações</li>
+        <li>Ordenação inteligente (recentes primeiro)</li>
+      </ul>
+
+      <h2>Arquitetura</h2>
+
+      <h3>Componentes</h3>
+      <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    Frontend (Streamlit)                     │
+│  pages/cardano.py - Interface do explorador                 │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────────┐
+│                Service Layer (Business Logic)               │
+│  services/cardano_api.py - Cliente CardanoScan API          │
+│  └─ Cache de metadados (in-memory)                          │
+│  └─ Análise de transações                                   │
+│  └─ Resolução de nomes/decimais                             │
+└─────────────────────┬───────────────────────────────────────┘
+                      │
+        ┌─────────────┴─────────────┐
+        │                           │
+┌───────▼─────────┐       ┌─────────▼──────────┐
+│  Database Layer │       │  External API      │
+│  ├─ t_wallet    │       │  CardanoScan v1    │
+│  ├─ t_banco     │       │  api.cardanoscan.io│
+│  └─ t_api_cardano│       └────────────────────┘
+└─────────────────┘</code></pre>
+
+      <h2>Funcionalidades</h2>
+
+      <h3>1️⃣ Saldo e Tokens</h3>
+
+      <h4>Informações Exibidas</h4>
+      <ul>
+        <li><strong>💰 Balance ADA</strong>: Saldo total em Lovelace convertido para ADA</li>
+        <li><strong>📊 Total de Transações</strong>: Contador de TXs confirmadas</li>
+        <li><strong>🪙 Tokens Nativos</strong>: Lista completa de tokens no endereço</li>
+      </ul>
+
+      <h4>Resolução de Metadados</h4>
+      <p><strong>Problema Original:</strong> Tokens aparecem como hex (ex: "Token 6df63e2f...")</p>
+
+      <p><strong>Solução Implementada:</strong></p>
+      <ol>
+        <li><strong>Metadata API Lookup</strong> (prioritário)
+          <ul>
+            <li>Consulta endpoint <code>/asset/{policyId}{assetName}</code> do CardanoScan</li>
+            <li>Extrai <code>name</code>, <code>decimals</code> de metadados on-chain</li>
+          </ul>
+        </li>
+        <li><strong>Fallback para Campos Diretos</strong>
+          <ul>
+            <li>Usa <code>assetNameAscii</code> se disponível</li>
+            <li>Decodifica hex de <code>assetName</code> para ASCII</li>
+          </ul>
+        </li>
+        <li><strong>Último Recurso</strong>
+          <ul>
+            <li>Mostra <code>policyId</code> truncado se nada funcionar</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3>2️⃣ Staking</h3>
+
+      <h4>Estados Possíveis</h4>
+      
+      <p><strong>1. Delegado a Pool</strong></p>
+      <pre><code>✅ Delegado
+Pool: POOL1 - Example Stake Pool
+Taxa: 2.5% | Margem: 340 ADA
+Recompensas Totais: 1,250.50 ADA
+Disponíveis: 50.25 ADA
+Levantadas: 1,200.25 ADA
+Stake Controlado: 10,500 ADA</code></pre>
+
+      <p><strong>2. Não Delegado (Mas Tem Conta)</strong></p>
+      <pre><code>⚠️ Não Delegado
+Conta de staking existe mas não está delegada a nenhum pool</code></pre>
+
+      <p><strong>3. Sem Conta de Staking</strong></p>
+      <pre><code>ℹ️ Sem Conta de Staking
+Este endereço não possui conta de staking registada</code></pre>
+
+      <h3>3️⃣ Transações</h3>
+
+      <h4>Carregamento Inteligente</h4>
+      <p><strong>Problema:</strong> API retorna páginas da antiga para recente</p>
+
+      <p><strong>Solução:</strong> Busca reversa</p>
+      <pre><code class="language-python"># Se total de páginas = 42 e max_pages = 5
+# Buscar páginas: 42, 41, 40, 39, 38
+start_page = max(1, page_count - max_pages + 1)
+for page in range(page_count, start_page - 1, -1):
+    fetch_page(page)</code></pre>
+
+      <p><strong>Resultado:</strong> Com 1 página já vê transações recentes!</p>
+
+      <h4>Análise Automática</h4>
+      <p>Cada transação é classificada como:</p>
+      <ul>
+        <li><strong>Enviado (Sent) ↗</strong>: ADA saiu do endereço (cor vermelha)</li>
+        <li><strong>Recebido (Received) ↙</strong>: ADA entrou no endereço (cor verde)</li>
+        <li><strong>Contrato (Contract) ↔</strong>: Interação com smart contract (cor azul/neutra)</li>
+      </ul>
+
+      <h2>Configuração</h2>
+
+      <h3>Tabelas de Base de Dados</h3>
+
+      <h4>t_api_cardano</h4>
+      <pre><code class="language-sql">CREATE TABLE t_api_cardano (
+    api_id SERIAL PRIMARY KEY,
+    api_name VARCHAR(100) NOT NULL UNIQUE,
+    api_key TEXT NOT NULL,
+    base_url TEXT NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    default_address TEXT,
+    rate_limit INTEGER,
+    timeout INTEGER DEFAULT 10,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+
+      <h4>t_wallet</h4>
+      <pre><code class="language-sql">CREATE TABLE t_wallet (
+    wallet_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES t_users(user_id),
+    wallet_name VARCHAR(100) NOT NULL,
+    wallet_type VARCHAR(20) NOT NULL,
+    blockchain VARCHAR(50) NOT NULL,
+    address TEXT NOT NULL,
+    stake_address TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
+    is_primary BOOLEAN DEFAULT FALSE,
+    balance_last_sync NUMERIC(20,8),
+    last_sync_at TIMESTAMP,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+
+      <p><strong>Tipos de Wallet:</strong></p>
+      <ul>
+        <li><code>hot</code>: Online, acesso frequente</li>
+        <li><code>cold</code>: Offline, armazenamento seguro</li>
+        <li><code>hardware</code>: Ledger, Trezor</li>
+        <li><code>exchange</code>: Wallet de exchange</li>
+        <li><code>defi</code>: Protocolos DeFi</li>
+      </ul>
+
+      <h2>API CardanoScan</h2>
+
+      <h3>Endpoints Utilizados</h3>
+
+      <h4>1. Address Summary</h4>
+      <pre><code>GET /address/summary?address={hex_address}</code></pre>
+
+      <h4>2. Transaction List</h4>
+      <pre><code>GET /transaction/list?address={hex_address}&pageNo={page}</code></pre>
+
+      <h4>3. Account Info (Staking)</h4>
+      <pre><code>GET /account/info?address={bech32_address}</code></pre>
+
+      <h4>4. Asset Metadata</h4>
+      <pre><code>GET /asset/{policyId}{assetName}</code></pre>
+
+      <h3>Rate Limits</h3>
+      <p><strong>CardanoScan Free Tier:</strong></p>
+      <ul>
+        <li>60 requests/minute</li>
+        <li>~1 request/second</li>
+      </ul>
+
+      <h2>Casos de Uso</h2>
+
+      <h3>Uso 1: Verificar Saldo de Wallet</h3>
+      <p><strong>Cenário:</strong> Admin quer verificar saldo da wallet do fundo antes de fazer swap.</p>
+
+      <p><strong>Passos:</strong></p>
+      <ol>
+        <li>Ir para <strong>Atividade → Cardano</strong></li>
+        <li>Endereço já pré-preenchido (default_address da API)</li>
+        <li>Tab <strong>💰 Saldo e Tokens</strong></li>
+        <li>Ver ADA disponível e tokens nativos</li>
+      </ol>
+
+      <h3>Uso 2: Acompanhar Recompensas de Staking</h3>
+      <p><strong>Cenário:</strong> Utilizador quer saber quanto ganhou de staking.</p>
+
+      <p><strong>Passos:</strong></p>
+      <ol>
+        <li><strong>Atividade → Cardano</strong></li>
+        <li>Inserir endereço da wallet</li>
+        <li>Tab <strong>🎯 Staking</strong></li>
+        <li>Ver pool delegado e recompensas</li>
+      </ol>
+
+      <h2>Troubleshooting</h2>
+
+      <h3>Problema: "Nenhuma API Cardano configurada"</h3>
+      <p><strong>Causa:</strong> Tabela <code>t_api_cardano</code> vazia ou todas APIs inativas.</p>
+
+      <p><strong>Solução:</strong></p>
+      <ol>
+        <li>Ir para <strong>Configurações → APIs Cardano</strong></li>
+        <li>Adicionar nova API:
+          <ul>
+            <li>Obter key gratuita em: https://cardanoscan.io/api</li>
+            <li>Nome: "CardanoScan"</li>
+            <li>URL: <code>https://api.cardanoscan.io/api/v1</code></li>
+          </ul>
+        </li>
+        <li>Verificar que <code>is_active = TRUE</code></li>
+      </ol>
+
+      <h3>Problema: Erro 429 (Rate Limit)</h3>
+      <p><strong>Causa:</strong> Muitas requests em pouco tempo.</p>
+
+      <p><strong>Soluções:</strong></p>
+      <ol>
+        <li>Aumentar timeout entre requests</li>
+        <li>Usar cache mais agressivo</li>
+        <li>Adicionar segunda API key</li>
+      </ol>
+
+      <h2>Recursos Externos</h2>
+
+      <h3>APIs e Documentação</h3>
+      <ul>
+        <li><a href="https://docs.cardanoscan.io/" target="_blank">CardanoScan API v1 Docs</a></li>
+        <li><a href="https://cips.cardano.org/cips/cip25/" target="_blank">CIP-25 - NFT Metadata Standard</a></li>
+        <li><a href="https://docs.cardano.org/new-to-cardano/cardano-addresses" target="_blank">Cardano Addresses Explained</a></li>
+      </ul>
+
+      <h3>Tools</h3>
+      <ul>
+        <li><a href="https://cardanoscan.io" target="_blank">CardanoScan Explorer</a></li>
+        <li><a href="https://explorer.cardano.org/" target="_blank">Cardano Explorer (IOG)</a></li>
+      </ul>
+
+      <div class="wiki-nav-bottom">
+        <a href="07-transaction-model-v2.html">← Transaction Model V2</a>
+        <a href="../index.html">Voltar ao Dashboard →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

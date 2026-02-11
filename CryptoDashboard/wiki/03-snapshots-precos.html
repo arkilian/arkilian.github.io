@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📸 Sistema de Snapshots e Preços - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>📸 Sistema de Snapshots e Preços</h1>
+
+      <h2>Visão Geral</h2>
+      <p>O sistema de snapshots é uma <strong>camada de cache inteligente</strong> que armazena preços históricos de criptomoedas na base de dados local, reduzindo drasticamente as chamadas à API do CoinGecko e melhorando performance.</p>
+
+      <h3>Por que Snapshots?</h3>
+      
+      <p><strong>Problema sem cache:</strong></p>
+      <pre><code>Análise de portfólio com 100 datas × 5 ativos = 500 chamadas API
+CoinGecko rate limit: ~30 chamadas/minuto
+Tempo necessário: ~17 minutos 😱
+Erro 429 (Too Many Requests): frequente ⚠️</code></pre>
+
+      <p><strong>Solução com snapshots:</strong></p>
+      <pre><code>1ª execução: 500 chamadas (salva tudo na BD)
+2ª execução: 0 chamadas (lê tudo da BD) ⚡
+Tempo: &lt; 1 segundo 🚀</code></pre>
+
+      <h2>Arquitetura</h2>
+
+      <h3>Camadas de Cache</h3>
+      <pre><code>┌─────────────────────────────────────────┐
+│  1. Session Cache (Memória)            │
+│  Dicionário Python temporário           │
+│  Duração: 1 sessão Streamlit            │
+└─────────────────────────────────────────┘
+               ↓ (se não encontrar)
+┌─────────────────────────────────────────┐
+│  2. Database Cache (PostgreSQL)         │
+│  Tabela t_price_snapshots               │
+│  Duração: Permanente                    │
+└─────────────────────────────────────────┘
+               ↓ (se não encontrar)
+┌─────────────────────────────────────────┐
+│  3. CoinGecko API (Externa)             │
+│  Endpoints: /simple/price, /history     │
+│  Rate limit: ~30/min grátis             │
+└─────────────────────────────────────────┘</code></pre>
+
+      <h3>Fluxo de Dados</h3>
+      <pre><code class="language-python">Pedido: Preço de ADA em 2025-01-15
+
+1. Verificar Session Cache
+   └─> _prices_session_cache[(ADA, 2025-01-15)]
+       └─> Se encontrar: RETURN ⚡
+       
+2. Verificar Database
+   └─> SELECT price FROM t_price_snapshots 
+       WHERE asset_id=X AND snapshot_date='2025-01-15'
+       └─> Se encontrar: 
+           - Guarda em Session Cache
+           - RETURN ⚡
+       
+3. Chamar CoinGecko API
+   └─> GET /coins/cardano/history?date=15-01-2025
+       └─> Parse response
+           - Guarda em Database
+           - Guarda em Session Cache
+           - time.sleep(2)  # Rate limiting
+           - RETURN</code></pre>
+
+      <h2>Tabela t_price_snapshots</h2>
+
+      <h3>Schema</h3>
+      <pre><code class="language-sql">CREATE TABLE t_price_snapshots (
+    snapshot_id SERIAL PRIMARY KEY,
+    asset_id INTEGER NOT NULL REFERENCES t_assets(asset_id),
+    snapshot_date DATE NOT NULL,
+    price NUMERIC(20, 8) NOT NULL,
+    vs_currency VARCHAR(10) NOT NULL DEFAULT 'eur',
+    created_at TIMESTAMP DEFAULT NOW(),
+    
+    -- Constraint: 1 preço por ativo/data/moeda
+    UNIQUE(asset_id, snapshot_date, vs_currency)
+);
+
+-- Índice para lookup rápido
+CREATE INDEX idx_price_snapshots_lookup 
+ON t_price_snapshots(asset_id, snapshot_date, vs_currency);</code></pre>
+
+      <h3>Características</h3>
+      <ul>
+        <li>✅ <strong>Único</strong>: Não permite duplicatas (UNIQUE constraint)</li>
+        <li>✅ <strong>Indexado</strong>: Queries extremamente rápidas</li>
+        <li>✅ <strong>Preciso</strong>: NUMERIC(20,8) para 8 casas decimais</li>
+        <li>✅ <strong>Multi-moeda</strong>: Suporta EUR, USD, etc</li>
+        <li>✅ <strong>Auditável</strong>: Timestamp de quando foi criado</li>
+      </ul>
+
+      <h2>Integração CoinGecko</h2>
+
+      <h3>Cliente CoinGecko (<code>services/coingecko.py</code>)</h3>
+
+      <h4>1. Mapeamento Símbolo → ID</h4>
+      <p><strong>Problema:</strong> CoinGecko usa IDs internos, não símbolos</p>
+      <pre><code>Símbolo → ID
+ADA     → cardano
+BTC     → bitcoin
+ETH     → ethereum</code></pre>
+
+      <h4>2. Preços Atuais</h4>
+      <p><strong>Endpoint:</strong> <code>GET /simple/price</code></p>
+      <pre><code>ids: bitcoin,ethereum,cardano
+vs_currencies: eur</code></pre>
+
+      <h4>3. Preços Históricos</h4>
+      <p><strong>Endpoint:</strong> <code>GET /coins/{id}/history</code></p>
+      <pre><code>date: 31-10-2025  # DD-MM-YYYY</code></pre>
+
+      <h2>Performance</h2>
+
+      <h3>Benchmarks</h3>
+      <p><strong>Cenário:</strong> Portfolio com 50 datas, 3 ativos</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Método</th>
+            <th>Tempo</th>
+            <th>Chamadas API</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sem cache</td>
+            <td>~300s</td>
+            <td>150</td>
+          </tr>
+          <tr>
+            <td>Cache BD apenas</td>
+            <td>~5s</td>
+            <td>0 (após 1ª vez)</td>
+          </tr>
+          <tr>
+            <td>Cache BD + Session</td>
+            <td>~0.8s</td>
+            <td>0 (após 1ª vez)</td>
+          </tr>
+          <tr>
+            <td>Prefetch + Bulk</td>
+            <td>~0.5s</td>
+            <td>0 (após 1ª vez)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Boas Práticas</h2>
+
+      <h3>✅ DO</h3>
+      <ul>
+        <li>Usar prefetch para múltiplas datas</li>
+        <li>Implementar bulk queries quando possível</li>
+        <li>Respeitar rate limits (sleep 2s)</li>
+        <li>Logar cache hits/misses para monitorização</li>
+        <li>Validar <code>coingecko_id</code> antes de chamar API</li>
+        <li>Usar session cache para evitar duplicatas</li>
+      </ul>
+
+      <h3>❌ DON'T</h3>
+      <ul>
+        <li>❌ Chamar API em loop sem sleep</li>
+        <li>❌ Fazer queries 1-a-1 quando bulk é possível</li>
+        <li>❌ Assumir que preço sempre existe</li>
+        <li>❌ Ignorar erros de API (retry é crítico)</li>
+        <li>❌ Deixar cache crescer infinitamente sem limpeza</li>
+      </ul>
+
+      <div class="wiki-nav-bottom">
+        <a href="02-shares-nav.html">← Sistema de Shares/NAV</a>
+        <a href="04-modelo-negocio.html">Modelo de Negócio →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

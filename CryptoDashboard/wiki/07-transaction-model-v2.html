@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>📚 Transaction Model V2 - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>📚 Guia do Novo Modelo de Transações V2</h1>
+
+      <h2>🎯 Objetivo</h2>
+      <p>Suportar todas as operações de cripto: depósitos, levantamentos, compras, vendas, swaps, transferências entre contas, staking, lending, borrowing, etc.</p>
+
+      <h2>📊 Estrutura da Transação V2</h2>
+
+      <h3>Colunas Principais</h3>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Coluna</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>transaction_type</code></td>
+            <td>TEXT</td>
+            <td>Tipo de operação (ver tabela abaixo)</td>
+          </tr>
+          <tr>
+            <td><code>from_asset_id</code></td>
+            <td>INT</td>
+            <td>Asset de origem (o que sai)</td>
+          </tr>
+          <tr>
+            <td><code>from_quantity</code></td>
+            <td>DECIMAL</td>
+            <td>Quantidade que sai</td>
+          </tr>
+          <tr>
+            <td><code>from_account_id</code></td>
+            <td>INT</td>
+            <td>Conta de origem (para transfers)</td>
+          </tr>
+          <tr>
+            <td><code>to_asset_id</code></td>
+            <td>INT</td>
+            <td>Asset de destino (o que entra)</td>
+          </tr>
+          <tr>
+            <td><code>to_quantity</code></td>
+            <td>DECIMAL</td>
+            <td>Quantidade que entra</td>
+          </tr>
+          <tr>
+            <td><code>to_account_id</code></td>
+            <td>INT</td>
+            <td>Conta de destino (para transfers)</td>
+          </tr>
+          <tr>
+            <td><code>account_id</code></td>
+            <td>INT</td>
+            <td>Conta principal da operação</td>
+          </tr>
+          <tr>
+            <td><code>fee_asset_id</code></td>
+            <td>INT</td>
+            <td>Asset usado para pagar fee</td>
+          </tr>
+          <tr>
+            <td><code>fee_quantity</code></td>
+            <td>DECIMAL</td>
+            <td>Quantidade de fee</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>🔄 Tipos de Transação</h2>
+
+      <h3>1. DEPOSIT (banco → exchange)</h3>
+      <p>Depositar EUR do banco para uma exchange.</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'deposit',
+    'from_asset_id': EUR_id,
+    'from_quantity': 1000.00,
+    'from_account_id': conta_banco_id,
+    'to_asset_id': EUR_id,
+    'to_quantity': 1000.00,
+    'to_account_id': binance_spot_id,
+    'fee_eur': 0.00
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Banco: -1000 EUR</li>
+        <li>Binance Spot: +1000 EUR</li>
+      </ul>
+
+      <h3>2. WITHDRAWAL (exchange → banco)</h3>
+      <p>Levantar EUR da exchange para o banco.</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'withdrawal',
+    'from_asset_id': EUR_id,
+    'from_quantity': 500.00,
+    'from_account_id': binance_spot_id,
+    'to_asset_id': EUR_id,
+    'to_quantity': 500.00,
+    'to_account_id': conta_banco_id,
+    'fee_eur': 0.00
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Binance Spot: -500 EUR</li>
+        <li>Banco: +500 EUR</li>
+      </ul>
+
+      <h3>3. BUY (EUR → Cripto)</h3>
+      <p>Comprar cripto com EUR.</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'buy',
+    'from_asset_id': EUR_id,
+    'from_quantity': 100.00,
+    'to_asset_id': ADA_id,
+    'to_quantity': 50.00,
+    'account_id': binance_spot_id,
+    'fee_asset_id': EUR_id,
+    'fee_quantity': 0.50
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Binance Spot: -100.50 EUR, +50 ADA</li>
+      </ul>
+
+      <h3>4. SELL (Cripto → EUR)</h3>
+      <p>Vender cripto por EUR.</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'sell',
+    'from_asset_id': ADA_id,
+    'from_quantity': 25.00,
+    'to_asset_id': EUR_id,
+    'to_quantity': 49.50,
+    'account_id': binance_spot_id,
+    'fee_asset_id': EUR_id,
+    'fee_quantity': 0.50
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Binance Spot: -25 ADA, +49.50 EUR</li>
+      </ul>
+
+      <h3>5. SWAP (Cripto A → Cripto B)</h3>
+      <p>Trocar um ativo por outro (DEX, exchange).</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'swap',
+    'from_asset_id': ADA_id,
+    'from_quantity': 50.00,
+    'to_asset_id': USDC_id,
+    'to_quantity': 40.00,
+    'account_id': minswap_id,
+    'fee_asset_id': ADA_id,
+    'fee_quantity': 0.50
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Minswap: -50.50 ADA, +40 USDC</li>
+      </ul>
+
+      <h3>6. TRANSFER (Conta A → Conta B)</h3>
+      <p>Mover asset entre contas/wallets.</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'transfer',
+    'from_asset_id': ADA_id,
+    'from_quantity': 100.00,
+    'from_account_id': binance_spot_id,
+    'to_asset_id': ADA_id,
+    'to_quantity': 99.50,
+    'to_account_id': metamask_id,
+    'fee_asset_id': ADA_id,
+    'fee_quantity': 0.50
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Binance Spot: -100 ADA</li>
+        <li>MetaMask: +99.50 ADA</li>
+        <li>(0.50 ADA perdido em network fee)</li>
+      </ul>
+
+      <h3>7. STAKE (Disponível → Staked)</h3>
+      <p>Colocar asset em staking/earn.</p>
+      
+      <pre><code class="language-python">{
+    'transaction_type': 'stake',
+    'from_asset_id': ADA_id,
+    'from_quantity': 100.00,
+    'from_account_id': binance_spot_id,
+    'to_asset_id': ADA_id,
+    'to_quantity': 100.00,
+    'to_account_id': binance_earn_id,
+    'fee_quantity': 0.00
+}</code></pre>
+
+      <p><strong>Holdings Impact:</strong></p>
+      <ul>
+        <li>Binance Spot: -100 ADA</li>
+        <li>Binance Earn: +100 ADA</li>
+      </ul>
+
+      <h2>⚠️ Notas Importantes</h2>
+
+      <h3>1. EUR é um Asset</h3>
+      <p>EUR agora está na tabela <code>t_assets</code> como <code>is_stablecoin=TRUE</code>.</p>
+
+      <h3>2. Conta "Banco"</h3>
+      <p>Existe uma exchange especial "Banco" (categoria FIAT) para rastrear EUR fora de exchanges.</p>
+
+      <h3>3. Retrocompatibilidade</h3>
+      <p>Transações antigas <code>buy</code>/<code>sell</code> continuam funcionando. As colunas legacy são mantidas.</p>
+
+      <h3>4. Fees em Qualquer Asset</h3>
+      <p>Fees agora podem ser em qualquer asset (não apenas EUR):</p>
+      <ul>
+        <li>Use <code>fee_asset_id</code> + <code>fee_quantity</code> para fees em cripto</li>
+        <li><code>fee_eur</code> ainda funciona para fees em EUR (retrocompat)</li>
+      </ul>
+
+      <div class="wiki-nav-bottom">
+        <a href="06-setup-deployment.html">← Setup e Deployment</a>
+        <a href="08-cardano-integration.html">Cardano Integration →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💎 Sistema de Shares/NAV - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>💎 Sistema de Shares/NAV</h1>
+
+      <h2>Visão Geral</h2>
+      <p>O sistema de shares é o <strong>coração</strong> do Crypto Dashboard. Garante que cada participante do fundo tem uma propriedade justa e proporcional, independentemente de quando entrou ou saiu.</p>
+
+      <h3>Por que Shares?</h3>
+      
+      <p><strong>Problema sem shares:</strong></p>
+      <pre><code>Dia 1: João deposita €1000
+Dia 30: Mercado sobe 50% → Fundo vale €1500
+Dia 30: Maria deposita €1500
+
+Como dividir o fundo agora?
+- João: depositou €1000 (33%)
+- Maria: depositou €1500 (50%)
+❌ TOTAL = 83%? Não fecha!
+❌ João não deve ter apenas 33% - ele estava desde o início!</code></pre>
+
+      <p><strong>Solução com shares:</strong></p>
+      <pre><code>Dia 1: João deposita €1000 → recebe 1000 shares (NAV/share = €1.00)
+       Total fundo: €1000, Total shares: 1000
+       
+Dia 30: Mercado sobe 50% → Fundo vale €1500
+        NAV/share = €1500 ÷ 1000 = €1.50
+        
+Dia 30: Maria deposita €1500 → recebe 1000 shares (€1500 ÷ €1.50)
+        Total fundo: €3000, Total shares: 2000
+        
+Propriedade:
+✅ João: 1000 shares = 50% do fundo = €1500
+✅ Maria: 1000 shares = 50% do fundo = €1500
+✅ TOTAL: 100% 🎯</code></pre>
+
+      <h2>Conceitos Fundamentais</h2>
+
+      <h3>NAV (Net Asset Value)</h3>
+      <p><strong>Definição:</strong> Valor líquido total do fundo</p>
+      
+      <p><strong>Fórmula:</strong></p>
+      <pre><code>NAV Total = Caixa Disponível + Valor das Holdings em Cripto</code></pre>
+
+      <p><strong>Componentes:</strong></p>
+      
+      <p>1. <strong>Caixa Disponível</strong>:</p>
+      <pre><code>Caixa = Σ Depósitos 
+      - Σ Levantamentos 
+      - Σ (Compras + Fees de Compra)
+      + Σ (Vendas - Fees de Venda)</code></pre>
+
+      <p>2. <strong>Valor das Holdings</strong>:</p>
+      <pre><code>Para cada ativo:
+    Holdings[ativo] = Σ Quantidades Compradas - Σ Quantidades Vendidas
+    Valor[ativo] = Holdings[ativo] × Preço Atual
+
+Total Holdings = Σ Valor[todos os ativos]</code></pre>
+
+      <h3>NAV por Share</h3>
+      <p><strong>Definição:</strong> Preço de cada share do fundo</p>
+      
+      <p><strong>Fórmula:</strong></p>
+      <pre><code>NAV/share = NAV Total do Fundo ÷ Total de Shares em Circulação</code></pre>
+
+      <p><strong>Caso Especial - Primeiro Depósito:</strong></p>
+      <pre><code class="language-python">if total_shares == 0:
+    return 1.0  # Inicializa com NAV/share = €1.00</code></pre>
+
+      <p><strong>Evolução:</strong></p>
+      <ul>
+        <li>📈 <strong>Mercado sobe</strong>: NAV/share aumenta</li>
+        <li>📉 <strong>Mercado desce</strong>: NAV/share diminui</li>
+        <li>💰 <strong>Novo depósito</strong>: NAV/share mantém-se (shares proporcionais)</li>
+        <li>💸 <strong>Levantamento</strong>: NAV/share mantém-se (queima shares proporcionais)</li>
+      </ul>
+
+      <h2>Operações</h2>
+
+      <h3>1. Depósito (Allocate Shares)</h3>
+      <p><strong>Fluxo:</strong></p>
+      <ol>
+        <li>Utilizador deposita X euros</li>
+        <li>Sistema calcula NAV/share ANTES do depósito</li>
+        <li>Shares atribuídas = X ÷ NAV/share</li>
+        <li>Registo criado em t_user_shares</li>
+        <li>Total shares aumenta</li>
+      </ol>
+
+      <h3>2. Levantamento (Burn Shares)</h3>
+      <p><strong>Fluxo:</strong></p>
+      <ol>
+        <li>Utilizador levanta X euros</li>
+        <li>Sistema calcula NAV/share ANTES do levantamento</li>
+        <li>Shares a queimar = X ÷ NAV/share</li>
+        <li>Validação: utilizador tem shares suficientes?</li>
+        <li>Registo negativo criado em t_user_shares</li>
+        <li>Total shares diminui</li>
+      </ol>
+
+      <h3>3. Transações de Cripto</h3>
+      <p><strong>Importante:</strong> Compras e vendas de cripto <strong>NÃO afetam shares</strong>!</p>
+
+      <p><strong>Porquê?</strong></p>
+      <ul>
+        <li>Compra: Trocamos caixa por cripto → NAV mantém-se → shares mantêm-se</li>
+        <li>Venda: Trocamos cripto por caixa → NAV mantém-se → shares mantêm-se</li>
+        <li>Apenas variações de preço de mercado mudam o NAV/share</li>
+      </ul>
+
+      <h2>Ownership (Propriedade)</h2>
+
+      <h3>Cálculo de Ownership %</h3>
+      <p><strong>Fórmula:</strong></p>
+      <pre><code>Ownership % = (Shares do Utilizador ÷ Total Shares) × 100</code></pre>
+
+      <h3>Valor em EUR do Utilizador</h3>
+      <p><strong>Fórmula:</strong></p>
+      <pre><code>Valor do Utilizador = Shares do Utilizador × NAV/share</code></pre>
+
+      <h2>Histórico de Shares</h2>
+
+      <h3>Tabela t_user_shares</h3>
+      <p><strong>Características:</strong></p>
+      <ul>
+        <li>✅ <strong>Imutável</strong>: Registos nunca são alterados (audit trail)</li>
+        <li>✅ <strong>Completo</strong>: Cada movimento tem contexto completo (NAV, shares, etc)</li>
+        <li>✅ <strong>Auditável</strong>: Pode-se reconstruir histórico completo</li>
+      </ul>
+
+      <h2>Boas Práticas</h2>
+
+      <h3>✅ DO</h3>
+      <ul>
+        <li>Sempre chamar <code>allocate_shares_on_deposit()</code> <strong>APÓS</strong> inserir em <code>t_user_capital_movements</code></li>
+        <li>Sempre chamar <code>burn_shares_on_withdrawal()</code> <strong>APÓS</strong> inserir debit</li>
+        <li>Validar shares suficientes antes de levantamentos</li>
+        <li>Usar transações de BD para garantir atomicidade</li>
+        <li>Preservar todo o histórico em <code>t_user_shares</code></li>
+        <li>Testar cálculos com arredondamentos</li>
+      </ul>
+
+      <h3>❌ DON'T</h3>
+      <ul>
+        <li>❌ Nunca alterar registos em <code>t_user_shares</code> (imutável)</li>
+        <li>❌ Nunca permitir <code>total_shares_after</code> negativo</li>
+        <li>❌ Nunca calcular NAV incluindo admins</li>
+        <li>❌ Nunca usar float para valores monetários (usar Decimal)</li>
+        <li>❌ Nunca assumir que NAV/share é fixo</li>
+      </ul>
+
+      <div class="wiki-nav-bottom">
+        <a href="01-arquitetura.html">← Arquitetura Técnica</a>
+        <a href="03-snapshots-precos.html">Snapshots e Preços →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

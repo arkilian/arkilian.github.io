@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💼 Modelo de Negócio - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>💼 Modelo de Negócio</h1>
+
+      <h2>Visão Geral</h2>
+      <p>O Crypto Dashboard é uma plataforma de gestão para <strong>fundos comunitários de criptoativos</strong>, onde múltiplos participantes contribuem capital para um pool comum gerido centralmente, com total transparência e ownership justo baseado em shares.</p>
+
+      <h3>Proposta de Valor</h3>
+      
+      <p><strong>Para Participantes (Investidores)</strong>:</p>
+      <ul>
+        <li>💎 Diversificação profissional sem gestão ativa individual</li>
+        <li>📊 Transparência total: vê exatamente quanto possui do fundo em tempo real</li>
+        <li>🎯 Entrada/saída justa pelo NAV (sem beneficiar late-comers ou penalizar early-birds)</li>
+        <li>📈 Acompanhamento visual de performance e composição</li>
+        <li>🔒 Auditabilidade completa de todos os movimentos</li>
+      </ul>
+
+      <p><strong>Para Gestores (Administradores)</strong>:</p>
+      <ul>
+        <li>🎛️ Ferramenta profissional para gestão centralizada</li>
+        <li>👥 Onboarding e offboarding automatizado via shares</li>
+        <li>📋 Reporting automático e sempre atualizado</li>
+        <li>⚖️ Sistema justo que elimina disputas sobre ownership</li>
+        <li>🔐 Base de dados auditável para compliance</li>
+      </ul>
+
+      <h2>Estrutura do Fundo</h2>
+
+      <h3>Participantes</h3>
+
+      <h4>1. Administradores</h4>
+      <ul>
+        <li>Gerem o portfólio (compras/vendas)</li>
+        <li>Adicionam e removem participantes</li>
+        <li>Processam depósitos e levantamentos</li>
+        <li>Acesso a todas as funcionalidades e dados agregados</li>
+      </ul>
+
+      <p><strong>Permissões</strong>:</p>
+      <ul>
+        <li>✅ Gestão de utilizadores</li>
+        <li>✅ Registo de transações de cripto</li>
+        <li>✅ Processamento de movimentos de capital</li>
+        <li>✅ Vista de fundo completo (todos os participantes)</li>
+        <li>✅ Configurações de sistema</li>
+      </ul>
+
+      <h4>2. Utilizadores/Participantes</h4>
+      <ul>
+        <li>Contribuem capital para o fundo</li>
+        <li>Recebem shares proporcionais</li>
+        <li>Acompanham seu ownership e performance</li>
+        <li>Podem solicitar levantamentos</li>
+      </ul>
+
+      <p><strong>Permissões</strong>:</p>
+      <ul>
+        <li>✅ Vista do próprio portfólio</li>
+        <li>✅ Histórico de depósitos/levantamentos</li>
+        <li>✅ Composição e performance pessoal</li>
+        <li>❌ Não gerem transações de cripto</li>
+        <li>❌ Não veem dados de outros participantes</li>
+      </ul>
+
+      <h2>Casos de Uso</h2>
+
+      <h3>1. Fundo Familiar</h3>
+      <p><strong>Contexto:</strong> Família com múltiplos membros querendo investir em conjunto</p>
+      
+      <p><strong>Setup:</strong></p>
+      <ul>
+        <li>1 membro como administrador (pai/mãe)</li>
+        <li>3-8 participantes (filhos, cônjuges, etc)</li>
+        <li>Depósitos mensais ou únicos</li>
+        <li>Estratégia conservadora (BTC, ETH, stablecoins)</li>
+      </ul>
+
+      <p><strong>Benefícios:</strong></p>
+      <ul>
+        <li>Gestão centralizada reduz overhead</li>
+        <li>Transparência evita conflitos familiares</li>
+        <li>Ensino financeiro para membros mais novos</li>
+        <li>Economias de escala (fees menores em transações grandes)</li>
+      </ul>
+
+      <h3>2. Clube de Investimento</h3>
+      <p><strong>Contexto:</strong> Grupo de amigos/colegas com interesse em cripto</p>
+      
+      <p><strong>Setup:</strong></p>
+      <ul>
+        <li>1-2 administradores (mais experientes)</li>
+        <li>10-30 participantes</li>
+        <li>Depósitos variáveis (€100-€10,000 cada)</li>
+        <li>Estratégia mais agressiva (altcoins, DeFi)</li>
+        <li>Reuniões mensais para decisões de investimento</li>
+      </ul>
+
+      <h3>3. Gestão Profissional (Small Fund)</h3>
+      <p><strong>Contexto:</strong> Gestor profissional com clientes pequenos</p>
+      
+      <p><strong>Setup:</strong></p>
+      <ul>
+        <li>1 gestor (admin)</li>
+        <li>20-100 clientes (utilizadores)</li>
+        <li>Depósitos via transferência bancária</li>
+        <li>Estratégia definida (whitepaper/prospecto)</li>
+        <li>Reporting mensal automatizado</li>
+      </ul>
+
+      <p><strong>Modelo de Receita:</strong></p>
+      <ul>
+        <li>Taxa de gestão: 2% anual sobre NAV</li>
+        <li>Taxa de performance: 20% acima de 8% anual (High-Water Mark)</li>
+      </ul>
+
+      <h2>Vantagens Competitivas</h2>
+
+      <h3>vs. Investimento Individual</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Aspecto</th>
+            <th>Individual</th>
+            <th>Fundo Comunitário</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Diversificação</td>
+            <td>Limitada (capital pequeno)</td>
+            <td>Ampla (pool grande)</td>
+          </tr>
+          <tr>
+            <td>Fees de Exchange</td>
+            <td>Altas (% sobre pequenos valores)</td>
+            <td>Baixas (economia de escala)</td>
+          </tr>
+          <tr>
+            <td>Gestão</td>
+            <td>Tempo próprio necessário</td>
+            <td>Delegada</td>
+          </tr>
+          <tr>
+            <td>Conhecimento</td>
+            <td>Curva aprendizagem íngreme</td>
+            <td>Partilhado</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Riscos e Mitigações</h2>
+
+      <h3>Risco 1: Má Gestão</h3>
+      <p><strong>Descrição:</strong> Admin faz trades ruins, fundo perde valor</p>
+      
+      <p><strong>Mitigação:</strong></p>
+      <ul>
+        <li>✅ Transparência total: todos veem transações</li>
+        <li>✅ Definir estratégia clara antecipadamente</li>
+        <li>✅ Stop-loss automático (futuro)</li>
+        <li>✅ Votação para trades grandes (governança)</li>
+      </ul>
+
+      <h3>Risco 2: Fraude/Theft</h3>
+      <p><strong>Descrição:</strong> Admin desvia fundos</p>
+      
+      <p><strong>Mitigação:</strong></p>
+      <ul>
+        <li>✅ Multi-sig para carteiras (requere 2+ assinaturas)</li>
+        <li>✅ Audit trail completo (impossível apagar)</li>
+        <li>✅ Regular auditorias externas</li>
+        <li>✅ Segregação de fundos (cold + hot wallet)</li>
+      </ul>
+
+      <h2>Conformidade e Legal</h2>
+
+      <h3>Disclaimer Importante</h3>
+      <p><strong>Este software é uma ferramenta de gestão e não constitui:</strong></p>
+      <ul>
+        <li>❌ Aconselhamento financeiro ou de investimento</li>
+        <li>❌ Oferta de valores mobiliários</li>
+        <li>❌ Serviço regulado de gestão de ativos</li>
+        <li>❌ Exchange ou plataforma de trading</li>
+      </ul>
+
+      <p><strong>Responsabilidades dos utilizadores:</strong></p>
+      <ul>
+        <li>✅ Verificar legalidade da operação na jurisdição local</li>
+        <li>✅ Cumprir requisitos de KYC/AML se aplicável</li>
+        <li>✅ Reportar ganhos de capital para fins fiscais</li>
+        <li>✅ Estabelecer contratos entre participantes</li>
+        <li>✅ Obter aconselhamento legal se necessário</li>
+      </ul>
+
+      <div class="wiki-nav-bottom">
+        <a href="03-snapshots-precos.html">← Snapshots e Preços</a>
+        <a href="05-guias-utilizador.html">Guias de Utilizador →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

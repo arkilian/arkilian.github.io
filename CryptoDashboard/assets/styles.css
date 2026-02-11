@@ -2,6 +2,46 @@
   gap: 20px;
 }
 
+.header-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.brand-centered {
+  display: grid;
+  gap: 12px;
+  max-width: 900px;
+}
+
+.brand-centered .tagline {
+  justify-self: center;
+}
+
+.brand-centered .actions {
+  justify-content: center;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 900px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 16px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(93, 242, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.hero-image img {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+}
+
 .full-width {
   grid-column: 1 / -1;
 }

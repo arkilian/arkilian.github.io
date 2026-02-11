@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🏗️ Arquitetura Técnica - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>🏗️ Arquitetura Técnica</h1>
+
+      <h2>Visão Geral</h2>
+      <p>O Crypto Dashboard é construído com uma arquitetura em camadas, separando claramente a interface do utilizador, lógica de negócio, acesso a dados e integrações externas.</p>
+
+      <pre><code>┌─────────────────────────────────────────────────┐
+│         Frontend (Streamlit UI)                 │
+│  app.py, pages/*, components                    │
+└─────────────────────────────────────────────────┘
+                      ↓
+┌─────────────────────────────────────────────────┐
+│         Services (Business Logic)               │
+│  services/shares.py                             │
+│  services/snapshots.py                          │
+│  services/coingecko.py                          │
+│  services/calculations.py                       │
+│  services/fees.py                               │
+└─────────────────────────────────────────────────┘
+                      ↓
+┌─────────────────────────────────────────────────┐
+│         Database Layer                          │
+│  database/connection.py                         │
+│  database/users.py                              │
+│  database/portfolio.py                          │
+└─────────────────────────────────────────────────┘
+                      ↓
+┌─────────────────────────────────────────────────┐
+│         PostgreSQL Database                     │
+│  Tables, Indexes, Constraints                   │
+└─────────────────────────────────────────────────┘
+                      ↓
+┌─────────────────────────────────────────────────┐
+│         External APIs                           │
+│  CoinGecko API (preços)                         │
+└─────────────────────────────────────────────────┘</code></pre>
+
+      <h2>Stack Tecnológico</h2>
+
+      <h3>Backend</h3>
+      <ul>
+        <li><strong>Python 3.10+</strong>: Linguagem principal</li>
+        <li><strong>Streamlit</strong>: Framework web para UI interativa</li>
+        <li><strong>PostgreSQL</strong>: Base de dados relacional</li>
+        <li><strong>SQLAlchemy</strong>: ORM e abstração de queries</li>
+        <li><strong>psycopg2</strong>: Driver PostgreSQL</li>
+        <li><strong>bcrypt</strong>: Hash de passwords</li>
+      </ul>
+
+      <h3>Frontend</h3>
+      <ul>
+        <li><strong>Streamlit Components</strong>: UI widgets nativos</li>
+        <li><strong>Plotly</strong>: Visualizações interativas (gráficos, charts)</li>
+        <li><strong>Pandas</strong>: Manipulação de dados e dataframes</li>
+        <li><strong>datetime/dateutil</strong>: Gestão de datas</li>
+      </ul>
+
+      <h3>Integrações</h3>
+      <ul>
+        <li><strong>CoinGecko API</strong>: Preços de criptomoedas em tempo real e históricos</li>
+        <li><strong>Requests</strong>: Cliente HTTP para APIs externas</li>
+      </ul>
+
+      <h2>Estrutura de Diretórios</h2>
+      <pre><code>CryptoDashboard/
+├── app.py                          # Entry point da aplicação
+├── config.py                       # Configurações globais
+├── requirements.txt                # Dependências Python
+│
+├── auth/                           # Autenticação e sessão
+│   ├── login.py                    # Lógica de login
+│   ├── register.py                 # Registo de utilizadores
+│   └── session_manager.py          # Gestão de sessão Streamlit
+│
+├── database/                       # Camada de acesso a dados
+│   ├── connection.py               # Pool de conexões PostgreSQL
+│   ├── users.py                    # Queries relacionadas a utilizadores
+│   ├── portfolio.py                # Queries de portfólio
+│   └── tablesv2.sql                # Schema completo da BD (V2)
+│
+├── pages/                          # Páginas da aplicação (routing)
+│   ├── analytics.py                # Página de análise (legacy)
+│   ├── portfolio.py                # Gestão de portfólio
+│   ├── portfolio_analysis.py       # Dashboard de análise completo
+│   ├── settings.py                 # Configurações
+│   └── users.py                    # Gestão de utilizadores (admin)
+│
+├── services/                       # Lógica de negócio
+│   ├── calculations.py             # Cálculos financeiros
+│   ├── coingecko.py                # Cliente CoinGecko API
+│   ├── fees.py                     # Gestão de taxas
+│   ├── minswap.py                  # Integração MinSwap
+│   ├── shares.py                   # Sistema de shares/NAV ⭐
+│   └── snapshots.py                # Cache de preços históricos ⭐
+│
+├── utils/                          # Utilitários
+│   ├── formatters.py               # Formatação de números/datas
+│   └── security.py                 # Funções de segurança
+│
+└── wiki/                           # Documentação
+    ├── 01-arquitetura.md
+    ├── 02-shares-nav.md
+    └── ...</code></pre>
+
+      <h2>Base de Dados</h2>
+
+      <h3>Schema Principal</h3>
+
+      <h4>Tabelas de Utilizadores</h4>
+      <pre><code class="language-sql">-- Autenticação e perfil base
+t_users
+├── user_id (PK)
+├── username (unique)
+├── password_hash
+├── email (unique)
+└── is_admin (boolean)
+
+-- Perfil detalhado
+t_user_profile
+├── profile_id (PK)
+├── user_id (FK → t_users)
+├── full_name
+├── birth_date
+├── gender
+└── address</code></pre>
+
+      <h4>Tabelas de Capital</h4>
+      <pre><code class="language-sql">-- Movimentos de capital (depósitos/levantamentos)
+t_user_capital_movements
+├── movement_id (PK)
+├── user_id (FK → t_users)
+├── movement_date
+├── credit (depósito)
+├── debit (levantamento)
+└── notes
+
+-- Sistema de shares (ownership) ⭐
+t_user_shares
+├── share_id (PK)
+├── user_id (FK → t_users)
+├── movement_date
+├── movement_type ('deposit' | 'withdrawal')
+├── amount_eur
+├── nav_per_share (preço da share no momento)
+├── shares_amount (positivo ou negativo)
+├── total_shares_after (acumulado do user)
+├── fund_nav (NAV total do fundo)
+└── notes</code></pre>
+
+      <h4>Tabelas de Ativos e Transações</h4>
+      <pre><code class="language-sql">-- Ativos disponíveis
+t_assets
+├── asset_id (PK)
+├── symbol (e.g., 'BTC', 'ETH', 'EUR')
+├── name
+├── chain
+├── coingecko_id
+└── is_stablecoin (BOOLEAN)
+
+-- Exchanges e Contas
+t_exchanges
+├── exchange_id (PK)
+├── name
+└── category
+
+t_exchange_accounts
+├── account_id (PK)
+├── exchange_id (FK → t_exchanges)
+├── user_id (FK → t_users)
+├── name (rótulo da conta)
+└── account_category (ex.: Spot, Earn, Wallet)</code></pre>
+
+      <h4>Cache de Preços ⭐</h4>
+      <pre><code class="language-sql">-- Snapshots de preços históricos
+t_price_snapshots
+├── snapshot_id (PK)
+├── asset_id (FK → t_assets)
+├── snapshot_date
+├── price
+├── vs_currency ('eur', 'usd', etc)
+└── created_at
+
+-- Index para busca rápida
+CREATE INDEX idx_price_snapshots_lookup 
+ON t_price_snapshots(asset_id, snapshot_date, vs_currency);</code></pre>
+
+      <h2>Componentes Principais</h2>
+
+      <h3>1. Sistema de Autenticação</h3>
+      <p><strong>Localização:</strong> <code>auth/</code></p>
+      
+      <p><strong>Fluxo:</strong></p>
+      <ol>
+        <li>Utilizador submete credenciais</li>
+        <li><code>login.py</code> valida contra <code>t_users</code> (bcrypt hash)</li>
+        <li><code>session_manager.py</code> cria sessão Streamlit</li>
+        <li>Sessão armazena: <code>user_id</code>, <code>username</code>, <code>is_admin</code></li>
+        <li>Decorator <code>@require_auth</code> protege páginas</li>
+      </ol>
+
+      <p><strong>Segurança:</strong></p>
+      <ul>
+        <li>Passwords nunca armazenadas em plain text</li>
+        <li>bcrypt com salt automático</li>
+        <li>Sessão server-side do Streamlit</li>
+        <li>Validação em todas as páginas protegidas</li>
+      </ul>
+
+      <div class="wiki-nav-bottom">
+        <a href="../index.html">← Voltar ao Dashboard</a>
+        <a href="02-shares-nav.html">Sistema de Shares/NAV →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

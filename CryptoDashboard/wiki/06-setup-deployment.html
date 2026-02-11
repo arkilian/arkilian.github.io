@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🚀 Setup e Deployment - CryptoDashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="../assets/styles.css" rel="stylesheet" />
+  <link href="../assets/styles-wiki.css" rel="stylesheet" />
+</head>
+<body class="grid-bg">
+  <div class="page wiki-page">
+    <nav class="wiki-nav">
+      <a class="nav-link" href="../index.html">
+        <i class="bi bi-arrow-left"></i>
+        Voltar ao Dashboard
+      </a>
+    </nav>
+    
+    <article class="wiki-content">
+      <h1>🚀 Setup e Deployment</h1>
+
+      <h2>Requisitos do Sistema</h2>
+
+      <h3>Software Necessário</h3>
+      
+      <p><strong>Essenciais:</strong></p>
+      <ul>
+        <li>Python 3.10 ou superior</li>
+        <li>PostgreSQL 12 ou superior</li>
+        <li>pip (gestor de pacotes Python)</li>
+      </ul>
+
+      <p><strong>Opcionais mas Recomendados:</strong></p>
+      <ul>
+        <li>Git (para clonar o repositório)</li>
+        <li>virtualenv ou venv (ambientes virtuais Python)</li>
+        <li>pgAdmin ou DBeaver (gestão de BD visual)</li>
+      </ul>
+
+      <h3>Requisitos de Hardware</h3>
+      
+      <p><strong>Mínimos:</strong></p>
+      <ul>
+        <li>CPU: 1 core</li>
+        <li>RAM: 512 MB</li>
+        <li>Disco: 1 GB livre</li>
+        <li>Internet: Conexão estável (para CoinGecko API)</li>
+      </ul>
+
+      <p><strong>Recomendados</strong> (para fundos com >20 utilizadores):</p>
+      <ul>
+        <li>CPU: 2+ cores</li>
+        <li>RAM: 2 GB</li>
+        <li>Disco: 5 GB livre (para logs e backups)</li>
+        <li>SSD (melhor performance de BD)</li>
+      </ul>
+
+      <hr>
+
+      <h2>Instalação Local (Desenvolvimento)</h2>
+
+      <h3>1. Clonar o Repositório</h3>
+      <pre><code class="language-bash">git clone https://github.com/your-repo/CryptoDashboard.git
+cd CryptoDashboard</code></pre>
+
+      <h3>2. Configurar Ambiente Virtual</h3>
+      
+      <p><strong>Windows:</strong></p>
+      <pre><code class="language-bash">python -m venv .venv
+.venv\Scripts\activate</code></pre>
+
+      <p><strong>Linux/Mac:</strong></p>
+      <pre><code class="language-bash">python3 -m venv .venv
+source .venv/bin/activate</code></pre>
+
+      <h3>3. Instalar Dependências</h3>
+      <pre><code class="language-bash">pip install -r requirements.txt</code></pre>
+
+      <p><strong>Dependências principais:</strong></p>
+      <pre><code>streamlit>=1.30.0
+pandas>=2.1.0
+plotly>=5.18.0
+psycopg2-binary>=2.9.9
+SQLAlchemy>=2.0.0
+bcrypt>=4.1.2
+python-dateutil>=2.8.2
+requests>=2.31.0</code></pre>
+
+      <h3>4. Configurar PostgreSQL</h3>
+
+      <h4>Opção A: PostgreSQL Local</h4>
+      
+      <p><strong>Criar Base de Dados:</strong></p>
+      <pre><code class="language-bash"># Aceder ao PostgreSQL
+psql -U postgres
+
+# Criar base de dados
+CREATE DATABASE crypto_dashboard;
+
+# Criar utilizador
+CREATE USER crypto_user WITH PASSWORD 'secure_password';
+
+# Dar permissões
+GRANT ALL PRIVILEGES ON DATABASE crypto_dashboard TO crypto_user;
+
+# Sair
+\q</code></pre>
+
+      <h3>5. Configurar Variáveis de Ambiente</h3>
+      
+      <p>Criar ficheiro <code>.env</code> na raiz do projeto:</p>
+      <pre><code class="language-bash"># .env
+DATABASE_URL=postgresql://crypto_user:secure_password@localhost:5432/crypto_dashboard
+SECRET_KEY=your-random-secret-key-here
+ENVIRONMENT=development
+
+# Opcional: CoinGecko API key (para tier pago)
+COINGECKO_API_KEY=your-api-key</code></pre>
+
+      <h3>6. Inicializar Base de Dados</h3>
+      
+      <p><strong>Executar Script de Setup:</strong></p>
+      <pre><code class="language-bash">psql -U crypto_user -d crypto_dashboard -f database/tablesv2.sql</code></pre>
+
+      <h3>7. Lançar Aplicação</h3>
+      <pre><code class="language-bash">streamlit run app.py</code></pre>
+
+      <p><strong>Acessar:</strong></p>
+      <pre><code>http://localhost:8501</code></pre>
+
+      <p><strong>Login inicial:</strong></p>
+      <ul>
+        <li>Username: <code>admin</code></li>
+        <li>Password: <code>admin123</code></li>
+        <li>⚠️ <strong>Alterar password imediatamente!</strong></li>
+      </ul>
+
+      <hr>
+
+      <h2>Deployment em Produção</h2>
+
+      <h3>Opção 1: Streamlit Cloud (Mais Fácil)</h3>
+
+      <p><strong>Pré-requisitos:</strong></p>
+      <ul>
+        <li>Repositório GitHub público ou privado</li>
+        <li>Conta Streamlit Cloud</li>
+      </ul>
+
+      <p><strong>Passos:</strong></p>
+      <ol>
+        <li>Push código para GitHub</li>
+        <li>Deploy no Streamlit Cloud</li>
+        <li>Configurar Secrets</li>
+        <li>Deploy</li>
+      </ol>
+
+      <p><strong>Limitações:</strong></p>
+      <ul>
+        <li>Máximo 1 GB RAM</li>
+        <li>CPU compartilhada</li>
+        <li>Sleep após 7 dias sem acesso</li>
+        <li>Adequado para <50 utilizadores</li>
+      </ul>
+
+      <h3>Opção 2: VPS (DigitalOcean, Linode, AWS EC2)</h3>
+
+      <p><strong>Recomendado para controlo total e performance</strong></p>
+
+      <h4>Setup no Ubuntu 22.04</h4>
+
+      <p><strong>1. Instalar dependências:</strong></p>
+      <pre><code class="language-bash"># Python 3.10
+apt install python3.10 python3.10-venv python3-pip -y
+
+# PostgreSQL
+apt install postgresql postgresql-contrib -y
+
+# Nginx (reverse proxy)
+apt install nginx -y
+
+# Certificados SSL
+apt install certbot python3-certbot-nginx -y</code></pre>
+
+      <p><strong>2. Criar serviço systemd:</strong></p>
+      <pre><code class="language-bash">nano /etc/systemd/system/crypto-dashboard.service</code></pre>
+
+      <pre><code class="language-ini">[Unit]
+Description=Crypto Dashboard Streamlit App
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/CryptoDashboard
+Environment="PATH=/opt/CryptoDashboard/.venv/bin"
+ExecStart=/opt/CryptoDashboard/.venv/bin/streamlit run app.py --server.port 8501 --server.address 127.0.0.1
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+
+      <p><strong>3. Configurar Nginx:</strong></p>
+      <pre><code class="language-nginx">server {
+    listen 80;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:8501;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        
+        # Timeouts
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+}</code></pre>
+
+      <p><strong>4. SSL com Let's Encrypt:</strong></p>
+      <pre><code class="language-bash">certbot --nginx -d your-domain.com</code></pre>
+
+      <hr>
+
+      <h2>Backup e Recuperação</h2>
+
+      <h3>Backup Automatizado</h3>
+      
+      <p><strong>Script de Backup:</strong></p>
+      <pre><code class="language-bash">#!/bin/bash
+# backup.sh
+
+BACKUP_DIR="/backups/crypto-dashboard"
+DATE=$(date +%Y%m%d_%H%M%S)
+DB_NAME="crypto_dashboard"
+DB_USER="crypto_user"
+
+# Criar diretório
+mkdir -p $BACKUP_DIR
+
+# Backup PostgreSQL
+pg_dump -U $DB_USER $DB_NAME > "$BACKUP_DIR/db_$DATE.sql"
+
+# Manter apenas últimos 30 dias
+find $BACKUP_DIR -type f -mtime +30 -delete
+
+echo "Backup concluído: $DATE"</code></pre>
+
+      <p><strong>Agendar com Cron:</strong></p>
+      <pre><code class="language-bash"># Backup diário às 2h da manhã
+0 2 * * * /opt/scripts/backup.sh >> /var/log/crypto-dashboard-backup.log 2>&1</code></pre>
+
+      <hr>
+
+      <h2>Segurança</h2>
+
+      <h3>SSL/TLS</h3>
+      <pre><code class="language-bash">certbot --nginx -d your-domain.com
+certbot renew --dry-run  # Testar renovação automática</code></pre>
+
+      <h3>Firewall</h3>
+      <pre><code class="language-bash"># Instalar UFW
+apt install ufw
+
+# Permitir apenas necessário
+ufw allow 22/tcp    # SSH
+ufw allow 80/tcp    # HTTP
+ufw allow 443/tcp   # HTTPS
+
+# Ativar
+ufw enable
+ufw status</code></pre>
+
+      <div class="wiki-nav-bottom">
+        <a href="05-guias-utilizador.html">← Guias de Utilizador</a>
+        <a href="07-transaction-model-v2.html">Transaction Model V2 →</a>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
