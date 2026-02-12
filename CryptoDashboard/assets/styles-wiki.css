@@ -86,12 +86,13 @@ body {
 .wiki-content {
   background: var(--card);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 3rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .wiki-content::after {
@@ -357,6 +358,18 @@ body {
 
   .wiki-content {
     padding: 1.5rem;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .wiki-content::after {
+    display: none;
+  }
+
+  .grid-bg::before,
+  .grid-bg::after {
+    opacity: 0.03;
   }
 
   .wiki-content h1 {
