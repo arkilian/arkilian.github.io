@@ -71,6 +71,25 @@
       </div>
     </header>
 
+    <section class="carousel-section" aria-labelledby="blog-carousel-title">
+      <div class="carousel-header">
+        <h2 id="blog-carousel-title">Artigos em destaque</h2>
+        <p>Lê os artigos mais recentes do Blog.</p>
+      </div>
+      <div class="carousel" data-blog-carousel>
+        <button class="carousel-control prev" type="button" aria-label="Artigo anterior">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <div class="carousel-viewport">
+          <div class="carousel-track" aria-live="polite"></div>
+        </div>
+        <button class="carousel-control next" type="button" aria-label="Proximo artigo">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+        <div class="carousel-dots" role="tablist" aria-label="Navegacao do carrosel"></div>
+      </div>
+    </section>
+
     <section class="grid">
       <article class="card">
         <h2>Projetos em destaque</h2>
@@ -96,6 +115,108 @@
       </article>
     </section>
   </div>
+
+  <script>
+    const blogEntries = [
+      {
+        title: "Comparacao de Plataformas de P2P Lending",
+        subtitle: "GoParity vs Raize vs Bondora vs ViaInvest",
+        image: "./Blog/P2P/assets/images/GuiaP2P.png",
+        link: "./Blog/P2P/index.html",
+        tag: "P2P Lending"
+      },
+      {
+        title: "Analise Comparativa de ETFs",
+        subtitle: "VUAA vs EUNK vs QDVE vs PPFB",
+        image: "./Blog/ETFs/assets/ETFs.png",
+        link: "./Blog/ETFs/index.html",
+        tag: "ETFs"
+      },
+      {
+        title: "A minha jornada",
+        subtitle: "Tecnologia, Dados & Financas",
+        image: "./Blog/Pessoal/assets/jornada.png",
+        link: "./Blog/Pessoal/index.html",
+        tag: "Sobre Mim"
+      }
+    ];
+
+    const carousel = document.querySelector("[data-blog-carousel]");
+    const track = carousel?.querySelector(".carousel-track");
+    const dots = carousel?.querySelector(".carousel-dots");
+    const prevButton = carousel?.querySelector(".carousel-control.prev");
+    const nextButton = carousel?.querySelector(".carousel-control.next");
+
+    if (carousel && track && dots && prevButton && nextButton) {
+      blogEntries.forEach((entry, index) => {
+        const slide = document.createElement("article");
+        slide.className = "carousel-slide";
+        slide.setAttribute("role", "tabpanel");
+        slide.setAttribute("aria-label", `${index + 1} de ${blogEntries.length}`);
+        slide.innerHTML = `
+          <a class="carousel-link" href="${entry.link}">
+            <div class="carousel-image" style="background-image: url('${entry.image}')"></div>
+            <div class="carousel-content">
+              <span class="carousel-tag">${entry.tag}</span>
+              <h3>${entry.title}</h3>
+              <p>${entry.subtitle}</p>
+              <span class="carousel-cta">Ler artigo →</span>
+            </div>
+          </a>
+        `;
+        track.appendChild(slide);
+
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "carousel-dot";
+        dot.setAttribute("aria-label", `Ir para artigo ${index + 1}`);
+        dot.addEventListener("click", () => setActiveSlide(index));
+        dots.appendChild(dot);
+      });
+
+      let activeIndex = 0;
+      let autoTimer = null;
+
+      const slides = Array.from(track.children);
+      const dotButtons = Array.from(dots.children);
+
+      const setActiveSlide = (index) => {
+        activeIndex = (index + slides.length) % slides.length;
+        track.style.transform = `translateX(-${activeIndex * 100}%)`;
+        slides.forEach((slide, idx) => {
+          slide.setAttribute("aria-hidden", idx !== activeIndex);
+        });
+        dotButtons.forEach((dot, idx) => {
+          dot.classList.toggle("active", idx === activeIndex);
+          dot.setAttribute("aria-current", idx === activeIndex ? "true" : "false");
+        });
+      };
+
+      const startAuto = () => {
+        autoTimer = window.setInterval(() => {
+          setActiveSlide(activeIndex + 1);
+        }, 6000);
+      };
+
+      const stopAuto = () => {
+        if (autoTimer) {
+          window.clearInterval(autoTimer);
+          autoTimer = null;
+        }
+      };
+
+      prevButton.addEventListener("click", () => setActiveSlide(activeIndex - 1));
+      nextButton.addEventListener("click", () => setActiveSlide(activeIndex + 1));
+
+      carousel.addEventListener("mouseenter", stopAuto);
+      carousel.addEventListener("mouseleave", startAuto);
+      carousel.addEventListener("focusin", stopAuto);
+      carousel.addEventListener("focusout", startAuto);
+
+      setActiveSlide(0);
+      startAuto();
+    }
+  </script>
 
 </body>
 </html>
